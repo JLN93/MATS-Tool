@@ -1,0 +1,2396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+broadcast chan pBrakePedalSensor_beh_start, pBrakePedalSensor_beh_stop;
+broadcast chan pLDM_Sensor_FL_beh_start, pLDM_Sensor_FL_beh_stop;
+broadcast chan pLDM_Brake_FL_beh_start, pLDM_Brake_FL_beh_stop;
+broadcast chan pABS_FL_beh_start, pABS_FL_beh_stop;
+broadcast chan pLDM_Sensor_FR_beh_start, pLDM_Sensor_FR_beh_stop;
+broadcast chan pLDM_Brake_FR_beh_start, pLDM_Brake_FR_beh_stop;
+broadcast chan pABS_FR_beh_start, pABS_FR_beh_stop;
+broadcast chan pLDM_Sensor_RL_beh_start, pLDM_Sensor_RL_beh_stop;
+broadcast chan pLDM_Brake_RL_beh_start, pLDM_Brake_RL_beh_stop;
+broadcast chan pABS_RL_beh_start, pABS_RL_beh_stop;
+broadcast chan pLDM_Sensor_RR_beh_start, pLDM_Sensor_RR_beh_stop;
+broadcast chan pLDM_Brake_RR_beh_start, pLDM_Brake_RR_beh_stop;
+broadcast chan pABS_RR_beh_start, pABS_RR_beh_stop;
+broadcast chan pBrakePedalLDM_beh_start, pBrakePedalLDM_beh_stop;
+broadcast chan pHW_Brake_FL_beh_start, pHW_Brake_FL_beh_stop;
+broadcast chan pHW_Brake_FR_beh_start, pHW_Brake_FR_beh_stop;
+broadcast chan pHW_Brake_RL_beh_start, pHW_Brake_RL_beh_stop;
+broadcast chan pHW_Brake_RR_beh_start, pHW_Brake_RR_beh_stop;
+broadcast chan pHW_Encoder_FL_beh_start, pHW_Encoder_FL_beh_stop;
+broadcast chan pHW_Encoder_FR_beh_start, pHW_Encoder_FR_beh_stop;
+broadcast chan pHW_Encoder_RL_beh_start, pHW_Encoder_RL_beh_stop;
+broadcast chan pHW_Encoder_RR_beh_start, pHW_Encoder_RR_beh_stop;
+broadcast chan pBrakeTorqueMap_beh_start, pBrakeTorqueMap_beh_stop;
+broadcast chan pGlobalBrakeController_beh_start, pGlobalBrakeController_beh_stop;
+broadcast chan pVehicleSpeedEstimator_beh_start, pVehicleSpeedEstimator_beh_stop;
+int pBrakePedalSensor_PositionIn;
+int pBrakePedalSensor_ElSignalOut;
+int pLDM_Sensor_FL_TicksIn;
+int pLDM_Sensor_FL_WheelSpeedOut;
+int pLDM_Brake_FL_TorqCmdIn;
+int pLDM_Brake_FL_ElSignalOut;
+int pABS_FL_RequestedTorqueIn;
+int pABS_FL_VehicleSpeedIn;
+int pABS_FL_WheelSpeedIn;
+int pABS_FL_ABSBrakeTorqueOut;
+int pLDM_Sensor_FR_TicksIn;
+int pLDM_Sensor_FR_WheelSpeedOut;
+int pLDM_Brake_FR_TorqCmdIn;
+int pLDM_Brake_FR_ElSignalOut;
+int pABS_FR_RequestedTorqueIn;
+int pABS_FR_VehicleSpeedIn;
+int pABS_FR_WheelSpeedIn;
+int pABS_FR_ABSBrakeTorqueOut;
+int pLDM_Sensor_RL_TicksIn;
+int pLDM_Sensor_RL_WheelSpeedOut;
+int pLDM_Brake_RL_TorqCmdIn;
+int pLDM_Brake_RL_ElSignalOut;
+int pABS_RL_RequestedTorqueIn;
+int pABS_RL_VehicleSpeedIn;
+int pABS_RL_WheelSpeedIn;
+int pABS_RL_ABSBrakeTorqueOut;
+int pLDM_Sensor_RR_TicksIn;
+int pLDM_Sensor_RR_WheelSpeedOut;
+int pLDM_Brake_RR_TorqCmdIn;
+int pLDM_Brake_RR_ElSignalOut;
+int pABS_RR_RequestedTorqueIn;
+int pABS_RR_VehicleSpeedIn;
+int pABS_RR_WheelSpeedIn;
+int pABS_RR_ABSBrakeTorqueOut;
+int pBrakePedalLDM_ElSignalIn;
+int pBrakePedalLDM_PositionPercentOut;
+int pHW_Brake_FL_ElSignalIn;
+int pHW_Brake_FL_BrakeTorqueOut;
+int pHW_Brake_FR_ElSignalIn;
+int pHW_Brake_FR_BrakeTorqueOut;
+int pHW_Brake_RL_ElSignalIn;
+int pHW_Brake_RL_BrakeTorqueOut;
+int pHW_Brake_RR_ElSignalIn;
+int pHW_Brake_RR_BrakeTorqueOut;
+int pHW_Encoder_FL_RotationIn;
+int pHW_Encoder_FL_TicksOut;
+int pHW_Encoder_FR_RotationIn;
+int pHW_Encoder_FR_TicksOut;
+int pHW_Encoder_RL_RotationIn;
+int pHW_Encoder_RL_TicksOut;
+int pHW_Encoder_RR_RotationIn;
+int pHW_Encoder_RR_TicksOut;
+int pBrakeTorqueMap_BrakePedalPos_percentIn;
+int pBrakeTorqueMap_DriverReqTorqOut;
+int pGlobalBrakeController_DriverReqTorqueIn;
+int pGlobalBrakeController_TorqRef_FLOut;
+int pGlobalBrakeController_TorqRef_FROut;
+int pGlobalBrakeController_TorqRef_RLOut;
+int pGlobalBrakeController_TorqRef_RROut;
+int pGlobalBrakeController_WheelSpeed_FLIn;
+int pGlobalBrakeController_WheelSpeed_FRIn;
+int pGlobalBrakeController_WheelSpeed_RLIn;
+int pGlobalBrakeController_WheelSpeed_RRIn;
+int pVehicleSpeedEstimator_VehicleSpeedEst;
+int pVehicleSpeedEstimator_WheelSpeed_FLIn;
+int pVehicleSpeedEstimator_WheelSpeed_FRIn;
+int pVehicleSpeedEstimator_WheelSpeed_RLIn;
+int pVehicleSpeedEstimator_WheelSpeed_RRIn;
+int pVehicleSpeedEstimator_WheelSpeed_FLIn_Trig;
+int pVehicleSpeedEstimator_WheelSpeed_FRIn_Trig;
+int pVehicleSpeedEstimator_WheelSpeed_RLIn_Trig;
+int pVehicleSpeedEstimator_WheelSpeed_RRIn_Trig;
+broadcast chan LDMAcuatorFL2ActuatorFL;
+broadcast chan LDMAcuatorFR2ActuatorFR;
+broadcast chan LDMAcuatorRL2ActuatorRL;
+broadcast chan LDMAcuatorRR2ActuatorRR;
+
+double energy; 
+clock pBrakePedalSensor_e, pBrakePedalLDM_e, pBrakeTorqueMap_e, pGlobalBrakeController_e,
+pHW_Encoder_FL_e, pHW_Encoder_FR_e, pHW_Encoder_RL_e, pHW_Encoder_RR_e,
+pLDM_Sensor_FL_e, pLDM_Sensor_FR_e, pLDM_Sensor_RL_e, pLDM_Sensor_RR_e,
+pVehicleSpeedEstimator_e,
+pABS_FL_e, pABS_FR_e, pABS_RL_e, pABS_RR_e,
+pLDM_Brake_FL_e, pLDM_Brake_FR_e, pLDM_Brake_RL_e, pLDM_Brake_RR_e,
+pHW_Brake_FL_e, pHW_Brake_FR_e, pHW_Brake_RL_e, pHW_Brake_RR_e;
+
+clock t;
+int flag=0;</declaration>
+	<template>
+		<name>Monitor</name>
+		<declaration>clock x;</declaration>
+		<location id="id0" x="8" y="93">
+			<name x="-2" y="59">End</name>
+			<label kind="invariant" x="-8" y="110">x'==0</label>
+		</location>
+		<location id="id1" x="-221" y="93">
+		</location>
+		<location id="id2" x="-467" y="93">
+		</location>
+		<location id="id3" x="255" y="-8">
+		</location>
+		<location id="id4" x="8" y="-8">
+		</location>
+		<location id="id5" x="-229" y="-8">
+		</location>
+		<location id="id6" x="-467" y="-8">
+		</location>
+		<location id="id7" x="255" y="-102">
+		</location>
+		<location id="id8" x="8" y="-102">
+		</location>
+		<location id="id9" x="-229" y="-102">
+		</location>
+		<location id="id10" x="-467" y="-102">
+		</location>
+		<location id="id11" x="263" y="-195">
+		</location>
+		<location id="id12" x="17" y="-195">
+		</location>
+		<location id="id13" x="-229" y="-195">
+		</location>
+		<location id="id14" x="-467" y="-195">
+			<name x="-477" y="-229">Init</name>
+			<label kind="invariant" x="-493" y="-187">x'==0</label>
+		</location>
+		<init ref="id14"/>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-203" y="76">pHW_Brake_FL_beh_stop?</label>
+			<label kind="assignment" x="-203" y="93">flag:=1</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-449" y="76">pHW_Brake_FL_beh_start?</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-449" y="25">pLDM_Brake_FL_beh_stop?</label>
+			<nail x="255" y="42"/>
+			<nail x="-467" y="42"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="26" y="-25">pLDM_Brake_FL_beh_start?</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-211" y="-25">pHW_Encoder_FL_beh_stop?</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-449" y="-25">pHW_Encoder_FL_beh_start?</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-449" y="-76">pGlobalBrakeController_beh_stop?</label>
+			<nail x="255" y="-59"/>
+			<nail x="-467" y="-59"/>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="25" y="-119">pGlobalBrakeController_beh_start?</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-212" y="-119">pBrakeTorqueMap_beh_stop?</label>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-449" y="-119">pBrakeTorqueMap_beh_start?</label>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="-450" y="-170">pBrakePedalLDM_beh_stop?</label>
+			<nail x="263" y="-153"/>
+			<nail x="-467" y="-153"/>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="35" y="-212">pBrakePedalLDM_beh_start?</label>
+		</transition>
+		<transition>
+			<source ref="id13"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-212" y="-212">pBrakePedalSensor_beh_stop?</label>
+		</transition>
+		<transition>
+			<source ref="id14"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-450" y="-229">pBrakePedalSensor_beh_start?</label>
+			<label kind="assignment" x="-391" y="-195">t:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name>Energy_M</name>
+		<location id="id15" x="0" y="0">
+			<label kind="exponentialrate" x="-10" y="34">100</label>
+		</location>
+		<init ref="id15"/>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id15"/>
+			<label kind="guard" x="-34" y="-144">flag==0</label>
+			<label kind="assignment" x="-280" y="-127">energy=pBrakePedalSensor_e+pBrakePedalLDM_e+pBrakeTorqueMap_e+pGlobalBrakeController_e+
+pHW_Encoder_FL_e+pHW_Encoder_FR_e+pHW_Encoder_RL_e+pHW_Encoder_RR_e+pLDM_Sensor_FL_e+
+pLDM_Sensor_FR_e+pLDM_Sensor_RL_e+pLDM_Sensor_RR_e+pVehicleSpeedEstimator_e+pABS_FL_e+
+pABS_FR_e+pABS_RL_e+pABS_RR_e+pLDM_Brake_FL_e+pLDM_Brake_FR_e+pLDM_Brake_RL_e+
+pLDM_Brake_RR_e+pHW_Brake_FL_e+pHW_Brake_FR_e+pHW_Brake_RL_e+pHW_Brake_RR_e</label>
+			<nail x="-127" y="-34"/>
+			<nail x="127" y="-34"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pBrakePedalSensor_CTRL</name>
+		<declaration>// Place local declarations here.
+clock en;
+clock x; 
+int exec=1;
+int period=5;
+
+</declaration>
+		<location id="id16" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id17" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id18" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="85" y="-119">x&lt;=exec &amp;&amp; 
+pBrakePedalSensor_e'==2</label>
+		</location>
+		<location id="id19" x="-144" y="-102">
+			<name x="-154" y="-132">Idle</name>
+			<label kind="invariant" x="-297" y="-102">x&lt;=period &amp;&amp; 
+pBrakePedalSensor_e'==0</label>
+		</location>
+		<init ref="id19"/>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id19"/>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id16"/>
+			<label kind="guard" x="0" y="-68">x==exec</label>
+			<label kind="synchronisation" x="0" y="-51">pBrakePedalSensor_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id17"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="-8" y="-170">pBrakePedalSensor_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id19"/>
+			<target ref="id17"/>
+			<label kind="guard" x="-161" y="-170">x==period</label>
+			<label kind="assignment" x="-161" y="-153">x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pBrakePedalSensor_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id20" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id21" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id21"/>
+		<transition>
+			<source ref="id20"/>
+			<target ref="id21"/>
+			<label kind="synchronisation" x="-136" y="40">pBrakePedalSensor_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pBrakePedalSensor_ElSignalOut:=pBrakePedalSensor_PositionIn,
+pBrakePedalSensor_e=pBrakePedalSensor_e+0.1</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-144" y="-104">pBrakePedalSensor_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pBrakePedalLDM_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id22" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id23" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id24" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pBrakePedalLDM_e'==2</label>
+		</location>
+		<location id="id25" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-289" y="-110">x&lt;=period &amp;&amp; 
+pBrakePedalLDM_e'==0</label>
+		</location>
+		<init ref="id25"/>
+		<transition>
+			<source ref="id22"/>
+			<target ref="id25"/>
+		</transition>
+		<transition>
+			<source ref="id24"/>
+			<target ref="id22"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pBrakePedalLDM_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id23"/>
+			<target ref="id24"/>
+			<label kind="synchronisation" x="-16" y="-160">pBrakePedalLDM_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id25"/>
+			<target ref="id23"/>
+			<label kind="guard" x="-192" y="-216">x==period</label>
+			<label kind="assignment" x="-192" y="-200">pBrakePedalLDM_ElSignalIn:=pBrakePedalSensor_ElSignalOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pBrakePedalLDM_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id26" x="8" y="24">
+		</location>
+		<location id="id27" x="8" y="-80">
+			<name x="-2" y="-110">Beh</name>
+			<committed/>
+		</location>
+		<location id="id28" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id28"/>
+		<transition>
+			<source ref="id27"/>
+			<target ref="id26"/>
+			<label kind="assignment" x="51" y="-25">pBrakePedalLDM_ElSignalIn:=4, 
+pBrakePedalLDM_e=pBrakePedalLDM_e+0.02</label>
+			<nail x="40" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id27"/>
+			<target ref="id26"/>
+			<label kind="assignment" x="51" y="-59">pBrakePedalLDM_ElSignalIn:=2, 
+pBrakePedalLDM_e=pBrakePedalLDM_e+0.3</label>
+		</transition>
+		<transition>
+			<source ref="id27"/>
+			<target ref="id26"/>
+			<label kind="assignment" x="51" y="-93">pBrakePedalLDM_ElSignalIn:=0, 
+pBrakePedalLDM_e=pBrakePedalLDM_e+0.2</label>
+			<nail x="-24" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id26"/>
+			<target ref="id28"/>
+			<label kind="synchronisation" x="-208" y="40">pBrakePedalLDM_beh_stop?</label>
+			<label kind="assignment" x="-208" y="56">pBrakePedalLDM_PositionPercentOut:=pBrakePedalLDM_ElSignalIn</label>
+			<nail x="-88" y="24"/>
+		</transition>
+		<transition>
+			<source ref="id28"/>
+			<target ref="id27"/>
+			<label kind="synchronisation" x="-240" y="-104">pBrakePedalLDM_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pBrakeTorqueMap_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=10;
+int exec=2;
+</declaration>
+		<location id="id29" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id30" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id31" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="85" y="-119">x&lt;=exec &amp;&amp; 
+pBrakeTorqueMap_e'==3</label>
+		</location>
+		<location id="id32" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-297" y="-110">x&lt;=period &amp;&amp; 
+pBrakeTorqueMap_e'==0</label>
+		</location>
+		<init ref="id32"/>
+		<transition>
+			<source ref="id29"/>
+			<target ref="id32"/>
+		</transition>
+		<transition>
+			<source ref="id31"/>
+			<target ref="id29"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pBrakeTorqueMap_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id30"/>
+			<target ref="id31"/>
+			<label kind="synchronisation" x="-16" y="-160">pBrakeTorqueMap_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id32"/>
+			<target ref="id30"/>
+			<label kind="guard" x="-200" y="-216">x==period</label>
+			<label kind="assignment" x="-200" y="-200">pBrakeTorqueMap_BrakePedalPos_percentIn:=pBrakePedalLDM_PositionPercentOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pBrakeTorqueMap_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id33" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id34" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id34"/>
+		<transition>
+			<source ref="id33"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="-136" y="40">pBrakeTorqueMap_beh_stop?</label>
+			<label kind="assignment" x="-136" y="64">pBrakeTorqueMap_DriverReqTorqOut=4*pBrakeTorqueMap_BrakePedalPos_percentIn, 
+pBrakeTorqueMap_e=pBrakeTorqueMap_e+0.3</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id34"/>
+			<target ref="id33"/>
+			<label kind="synchronisation" x="-144" y="-104">pBrakeTorqueMap_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pGlobalBrakeController_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=20;
+int exec=2;
+</declaration>
+		<location id="id35" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id36" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id37" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pGlobalBrakeController_e'==4</label>
+		</location>
+		<location id="id38" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-110">x&lt;=period &amp;&amp;
+pGlobalBrakeController_e'==0</label>
+		</location>
+		<init ref="id38"/>
+		<transition>
+			<source ref="id35"/>
+			<target ref="id38"/>
+		</transition>
+		<transition>
+			<source ref="id37"/>
+			<target ref="id35"/>
+			<label kind="guard" x="16" y="-80">x==exec</label>
+			<label kind="synchronisation" x="16" y="-64">pGlobalBrakeController_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id36"/>
+			<target ref="id37"/>
+			<label kind="synchronisation" x="-16" y="-160">pGlobalBrakeController_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id38"/>
+			<target ref="id36"/>
+			<label kind="guard" x="-200" y="-280">x==period</label>
+			<label kind="assignment" x="-200" y="-264">pGlobalBrakeController_DriverReqTorqueIn:=pBrakeTorqueMap_DriverReqTorqOut,
+pGlobalBrakeController_WheelSpeed_FLIn:=pLDM_Sensor_FL_WheelSpeedOut,
+pGlobalBrakeController_WheelSpeed_FRIn:=pLDM_Sensor_FR_WheelSpeedOut,
+pGlobalBrakeController_WheelSpeed_RLIn:=pLDM_Sensor_RL_WheelSpeedOut,
+pGlobalBrakeController_WheelSpeed_RRIn:=pLDM_Sensor_RR_WheelSpeedOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pGlobalBrakeController_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id39" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id40" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id40"/>
+		<transition>
+			<source ref="id39"/>
+			<target ref="id40"/>
+			<label kind="synchronisation" x="-136" y="40">pGlobalBrakeController_beh_stop?</label>
+			<label kind="assignment" x="-136" y="64">pGlobalBrakeController_TorqRef_FLOut=pGlobalBrakeController_DriverReqTorqueIn/4,
+pGlobalBrakeController_TorqRef_FROut=pGlobalBrakeController_DriverReqTorqueIn/4,
+pGlobalBrakeController_TorqRef_RLOut=pGlobalBrakeController_DriverReqTorqueIn/4,
+pGlobalBrakeController_TorqRef_RROut=pGlobalBrakeController_DriverReqTorqueIn/4,
+pGlobalBrakeController_e=pGlobalBrakeController_e+0.4</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id40"/>
+			<target ref="id39"/>
+			<label kind="synchronisation" x="-144" y="-104">pGlobalBrakeController_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Encoder_FL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int exec=1;
+int period=5;
+</declaration>
+		<location id="id41" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id42" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id43" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pHW_Encoder_FL_e'==1</label>
+		</location>
+		<location id="id44" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-110">x&lt;=period &amp;&amp;
+pHW_Encoder_FL_e'==0</label>
+		</location>
+		<init ref="id44"/>
+		<transition>
+			<source ref="id41"/>
+			<target ref="id44"/>
+		</transition>
+		<transition>
+			<source ref="id43"/>
+			<target ref="id41"/>
+			<label kind="guard" x="17" y="-85">x==exec</label>
+			<label kind="synchronisation" x="8" y="-68">pHW_Encoder_FL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id42"/>
+			<target ref="id43"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Encoder_FL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id44"/>
+			<target ref="id42"/>
+			<label kind="guard" x="-153" y="-170">x==period</label>
+			<label kind="assignment" x="-153" y="-153">x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Encoder_FL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id45" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id46" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id46"/>
+		<transition>
+			<source ref="id45"/>
+			<target ref="id46"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Encoder_FL_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Encoder_FL_TicksOut:=pHW_Encoder_FL_RotationIn, 
+pHW_Encoder_FL_e=pHW_Encoder_FL_e+0.1</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id46"/>
+			<target ref="id45"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Encoder_FL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Encoder_FR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x; 
+int exec=1;
+int period=5;</declaration>
+		<location id="id47" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id48" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id49" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pHW_Encoder_FR_e'==1</label>
+		</location>
+		<location id="id50" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-102">x&lt;=period &amp;&amp; 
+pHW_Encoder_FR_e'==0</label>
+		</location>
+		<init ref="id50"/>
+		<transition>
+			<source ref="id47"/>
+			<target ref="id50"/>
+		</transition>
+		<transition>
+			<source ref="id49"/>
+			<target ref="id47"/>
+			<label kind="guard" x="17" y="-85">x==exec</label>
+			<label kind="synchronisation" x="8" y="-72">pHW_Encoder_FR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id48"/>
+			<target ref="id49"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Encoder_FR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id50"/>
+			<target ref="id48"/>
+			<label kind="guard" x="-144" y="-170">x==period</label>
+			<label kind="assignment" x="-144" y="-153">x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Encoder_FR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id51" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id52" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id52"/>
+		<transition>
+			<source ref="id51"/>
+			<target ref="id52"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Encoder_FR_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Encoder_FR_TicksOut:=pHW_Encoder_FR_RotationIn,
+pHW_Encoder_FR_e=pHW_Encoder_FR_e+0.1</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id52"/>
+			<target ref="id51"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Encoder_FR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Encoder_RL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int exec=1;
+int period=5;</declaration>
+		<location id="id53" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id54" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id55" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pHW_Encoder_RL_e'==1</label>
+		</location>
+		<location id="id56" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-110">x&lt;=period &amp;&amp; 
+pHW_Encoder_RL_e'==0</label>
+		</location>
+		<init ref="id56"/>
+		<transition>
+			<source ref="id53"/>
+			<target ref="id56"/>
+		</transition>
+		<transition>
+			<source ref="id55"/>
+			<target ref="id53"/>
+			<label kind="guard" x="25" y="-85">x==exec</label>
+			<label kind="synchronisation" x="25" y="-68">pHW_Encoder_RL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id54"/>
+			<target ref="id55"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Encoder_RL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id56"/>
+			<target ref="id54"/>
+			<label kind="guard" x="-136" y="-170">x==period</label>
+			<label kind="assignment" x="-136" y="-153">x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Encoder_RL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id57" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id58" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id58"/>
+		<transition>
+			<source ref="id57"/>
+			<target ref="id58"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Encoder_RL_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Encoder_RL_TicksOut:=pHW_Encoder_RL_RotationIn,
+pHW_Encoder_RL_e=pHW_Encoder_RL_e+0.1</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id58"/>
+			<target ref="id57"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Encoder_RL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Encoder_RR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int exec=1;
+int period=5;</declaration>
+		<location id="id59" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id60" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id61" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pHW_Encoder_RR_e'==1</label>
+		</location>
+		<location id="id62" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-110">x&lt;=period &amp;&amp; 
+pHW_Encoder_RR_e'==0</label>
+		</location>
+		<init ref="id62"/>
+		<transition>
+			<source ref="id59"/>
+			<target ref="id62"/>
+		</transition>
+		<transition>
+			<source ref="id61"/>
+			<target ref="id59"/>
+			<label kind="guard" x="17" y="-85">x==exec</label>
+			<label kind="synchronisation" x="8" y="-72">pHW_Encoder_RR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id60"/>
+			<target ref="id61"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Encoder_RR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id62"/>
+			<target ref="id60"/>
+			<label kind="guard" x="-144" y="-170">x==period</label>
+			<label kind="assignment" x="-144" y="-153">x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Encoder_RR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id63" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id64" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id64"/>
+		<transition>
+			<source ref="id63"/>
+			<target ref="id64"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Encoder_RR_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Encoder_RR_TicksOut:=pHW_Encoder_RR_RotationIn,
+pHW_Encoder_RR_e=pHW_Encoder_RR_e+0.1</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id64"/>
+			<target ref="id63"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Encoder_RR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Sensor_FL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id65" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id66" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id67" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="72" y="-112">x&lt;=exec &amp;&amp; 
+pLDM_Sensor_FL_e'==1</label>
+		</location>
+		<location id="id68" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-110">x&lt;=period &amp;&amp; 
+pLDM_Sensor_FL_e'==0</label>
+		</location>
+		<init ref="id68"/>
+		<transition>
+			<source ref="id65"/>
+			<target ref="id68"/>
+		</transition>
+		<transition>
+			<source ref="id67"/>
+			<target ref="id65"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pLDM_Sensor_FL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id66"/>
+			<target ref="id67"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Sensor_FL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id68"/>
+			<target ref="id66"/>
+			<label kind="guard" x="-232" y="-240">x==period</label>
+			<label kind="assignment" x="-232" y="-224">pLDM_Sensor_FL_TicksIn:=pHW_Encoder_FL_TicksOut,
+ x:=0,
+pVehicleSpeedEstimator_WheelSpeed_FLIn_Trig=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Sensor_FL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id69" x="8" y="24">
+		</location>
+		<location id="id70" x="8" y="-80">
+			<name x="-2" y="-110">Beh</name>
+			<committed/>
+		</location>
+		<location id="id71" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id71"/>
+		<transition>
+			<source ref="id70"/>
+			<target ref="id69"/>
+			<label kind="assignment" x="51" y="-17">pLDM_Sensor_FL_TicksIn:=32,
+pLDM_Sensor_FL_e=pLDM_Sensor_FL_e+0.01</label>
+			<nail x="40" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id70"/>
+			<target ref="id69"/>
+			<label kind="assignment" x="51" y="-51">pLDM_Sensor_FL_TicksIn:=16,
+pLDM_Sensor_FL_e=pLDM_Sensor_FL_e+0.2</label>
+		</transition>
+		<transition>
+			<source ref="id70"/>
+			<target ref="id69"/>
+			<label kind="assignment" x="51" y="-85">pLDM_Sensor_FL_TicksIn:=8,
+pLDM_Sensor_FL_e=pLDM_Sensor_FL_e+0.1</label>
+			<nail x="-24" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id69"/>
+			<target ref="id71"/>
+			<label kind="synchronisation" x="-200" y="32">pLDM_Sensor_FL_beh_stop?</label>
+			<label kind="assignment" x="-200" y="48">pLDM_Sensor_FL_WheelSpeedOut:=pLDM_Sensor_FL_TicksIn</label>
+			<nail x="-88" y="24"/>
+		</transition>
+		<transition>
+			<source ref="id71"/>
+			<target ref="id70"/>
+			<label kind="synchronisation" x="-208" y="-112">pLDM_Sensor_FL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Sensor_FR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id72" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id73" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id74" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pLDM_Sensor_FR_e'==1</label>
+		</location>
+		<location id="id75" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-110">x&lt;=period &amp;&amp; 
+pLDM_Sensor_FR_e'==0</label>
+		</location>
+		<init ref="id75"/>
+		<transition>
+			<source ref="id72"/>
+			<target ref="id75"/>
+		</transition>
+		<transition>
+			<source ref="id74"/>
+			<target ref="id72"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pLDM_Sensor_FR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id73"/>
+			<target ref="id74"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Sensor_FR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id75"/>
+			<target ref="id73"/>
+			<label kind="guard" x="-256" y="-248">x==period</label>
+			<label kind="assignment" x="-256" y="-232">pLDM_Sensor_FR_TicksIn:=pHW_Encoder_FR_TicksOut,
+ x:=0,
+pVehicleSpeedEstimator_WheelSpeed_FRIn_Trig=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Sensor_FR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id76" x="8" y="24">
+		</location>
+		<location id="id77" x="8" y="-80">
+			<name x="-2" y="-110">Beh</name>
+			<committed/>
+		</location>
+		<location id="id78" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id78"/>
+		<transition>
+			<source ref="id77"/>
+			<target ref="id76"/>
+			<label kind="assignment" x="51" y="-17">pLDM_Sensor_FR_TicksIn:=32,
+pLDM_Sensor_FR_e=pLDM_Sensor_FR_e+0.01</label>
+			<nail x="40" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id77"/>
+			<target ref="id76"/>
+			<label kind="assignment" x="51" y="-85">pLDM_Sensor_FR_TicksIn:=8,
+pLDM_Sensor_FR_e=pLDM_Sensor_FR_e+0.1</label>
+			<nail x="-24" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id77"/>
+			<target ref="id76"/>
+			<label kind="assignment" x="51" y="-51">pLDM_Sensor_FR_TicksIn:=16,
+pLDM_Sensor_FR_e=pLDM_Sensor_FR_e+0.2</label>
+		</transition>
+		<transition>
+			<source ref="id76"/>
+			<target ref="id78"/>
+			<label kind="synchronisation" x="-200" y="32">pLDM_Sensor_FR_beh_stop?</label>
+			<label kind="assignment" x="-200" y="48">pLDM_Sensor_FR_WheelSpeedOut:=pLDM_Sensor_FR_TicksIn</label>
+			<nail x="-88" y="24"/>
+		</transition>
+		<transition>
+			<source ref="id78"/>
+			<target ref="id77"/>
+			<label kind="synchronisation" x="-208" y="-104">pLDM_Sensor_FR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Sensor_RL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id79" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id80" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id81" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pLDM_Sensor_RL_e'==1</label>
+		</location>
+		<location id="id82" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-102">x&lt;=period &amp;&amp; 
+pLDM_Sensor_RL_e'==0</label>
+		</location>
+		<init ref="id82"/>
+		<transition>
+			<source ref="id79"/>
+			<target ref="id82"/>
+		</transition>
+		<transition>
+			<source ref="id81"/>
+			<target ref="id79"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pLDM_Sensor_RL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id80"/>
+			<target ref="id81"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Sensor_RL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id82"/>
+			<target ref="id80"/>
+			<label kind="guard" x="-216" y="-240">x==period</label>
+			<label kind="assignment" x="-216" y="-224">pLDM_Sensor_RL_TicksIn:=pHW_Encoder_RL_TicksOut,
+ x:=0,
+pVehicleSpeedEstimator_WheelSpeed_RLIn_Trig=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Sensor_RL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id83" x="8" y="24">
+		</location>
+		<location id="id84" x="8" y="-80">
+			<name x="-2" y="-110">Beh</name>
+			<committed/>
+		</location>
+		<location id="id85" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id85"/>
+		<transition>
+			<source ref="id84"/>
+			<target ref="id83"/>
+			<label kind="assignment" x="51" y="-17">pLDM_Sensor_RL_TicksIn:=32,
+pLDM_Sensor_RL_e=pLDM_Sensor_RL_e+0.01</label>
+			<nail x="40" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id84"/>
+			<target ref="id83"/>
+			<label kind="assignment" x="51" y="-51">pLDM_Sensor_RL_TicksIn:=16,
+pLDM_Sensor_RL_e=pLDM_Sensor_RL_e+0.2</label>
+		</transition>
+		<transition>
+			<source ref="id84"/>
+			<target ref="id83"/>
+			<label kind="assignment" x="51" y="-85">pLDM_Sensor_RL_TicksIn:=8,
+pLDM_Sensor_RL_e=pLDM_Sensor_RL_e+0.1</label>
+			<nail x="-24" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id83"/>
+			<target ref="id85"/>
+			<label kind="synchronisation" x="-200" y="32">pLDM_Sensor_RL_beh_stop?</label>
+			<label kind="assignment" x="-200" y="48">pLDM_Sensor_RL_WheelSpeedOut:=pLDM_Sensor_RL_TicksIn</label>
+			<nail x="-88" y="24"/>
+		</transition>
+		<transition>
+			<source ref="id85"/>
+			<target ref="id84"/>
+			<label kind="synchronisation" x="-208" y="-104">pLDM_Sensor_RL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Sensor_RR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id86" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id87" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id88" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pLDM_Sensor_RR_e'==1</label>
+		</location>
+		<location id="id89" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-110">x&lt;=period &amp;&amp; 
+pLDM_Sensor_RR_e'==0</label>
+		</location>
+		<init ref="id89"/>
+		<transition>
+			<source ref="id86"/>
+			<target ref="id89"/>
+		</transition>
+		<transition>
+			<source ref="id88"/>
+			<target ref="id86"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pLDM_Sensor_RR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id87"/>
+			<target ref="id88"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Sensor_RR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id89"/>
+			<target ref="id87"/>
+			<label kind="guard" x="-192" y="-240">x==period</label>
+			<label kind="assignment" x="-192" y="-224">pLDM_Sensor_RR_TicksIn:=pHW_Encoder_RR_TicksOut,
+ x:=0,
+pVehicleSpeedEstimator_WheelSpeed_RRIn_Trig=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Sensor_RR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id90" x="8" y="24">
+		</location>
+		<location id="id91" x="8" y="-80">
+			<name x="-2" y="-110">Beh</name>
+			<committed/>
+		</location>
+		<location id="id92" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id92"/>
+		<transition>
+			<source ref="id91"/>
+			<target ref="id90"/>
+			<label kind="assignment" x="51" y="-17">pLDM_Sensor_RR_TicksIn:=32,
+pLDM_Sensor_RR_e=pLDM_Sensor_RR_e+0.01</label>
+			<nail x="40" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id91"/>
+			<target ref="id90"/>
+			<label kind="assignment" x="51" y="-85">pLDM_Sensor_RR_TicksIn:=8,
+pLDM_Sensor_RR_e=pLDM_Sensor_RR_e+0.1</label>
+			<nail x="-24" y="-32"/>
+		</transition>
+		<transition>
+			<source ref="id91"/>
+			<target ref="id90"/>
+			<label kind="assignment" x="51" y="-51">pLDM_Sensor_RR_TicksIn:=16,
+pLDM_Sensor_RR_e=pLDM_Sensor_RR_e+0.2</label>
+		</transition>
+		<transition>
+			<source ref="id90"/>
+			<target ref="id92"/>
+			<label kind="synchronisation" x="-200" y="32">pLDM_Sensor_RR_beh_stop?</label>
+			<label kind="assignment" x="-200" y="48">pLDM_Sensor_RR_WheelSpeedOut:=pLDM_Sensor_RR_TicksIn</label>
+			<nail x="-88" y="24"/>
+		</transition>
+		<transition>
+			<source ref="id92"/>
+			<target ref="id91"/>
+			<label kind="synchronisation" x="-208" y="-104">pLDM_Sensor_RR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pVehicleSpeedEstimator_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int exec=2;
+int period=5;
+</declaration>
+		<location id="id93" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id94" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id95" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp; 
+pVehicleSpeedEstimator_e'==5</label>
+		</location>
+		<location id="id96" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-110">x&lt;=period &amp;&amp;
+pVehicleSpeedEstimator_e'==0</label>
+		</location>
+		<init ref="id96"/>
+		<transition>
+			<source ref="id93"/>
+			<target ref="id96"/>
+		</transition>
+		<transition>
+			<source ref="id95"/>
+			<target ref="id93"/>
+			<label kind="guard" x="25" y="-85">x==exec</label>
+			<label kind="synchronisation" x="8" y="-72">pVehicleSpeedEstimator_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id94"/>
+			<target ref="id95"/>
+			<label kind="synchronisation" x="-16" y="-160">pVehicleSpeedEstimator_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id96"/>
+			<target ref="id94"/>
+			<label kind="guard" x="-204" y="-280">x==period</label>
+			<label kind="assignment" x="-204" y="-263">x:=0,
+pVehicleSpeedEstimator_WheelSpeed_RRIn:=pLDM_Sensor_RR_WheelSpeedOut,
+pVehicleSpeedEstimator_WheelSpeed_RLIn:=pLDM_Sensor_RL_WheelSpeedOut,
+pVehicleSpeedEstimator_WheelSpeed_FRIn:=pLDM_Sensor_FR_WheelSpeedOut,
+pVehicleSpeedEstimator_WheelSpeed_FLIn:=pLDM_Sensor_FL_WheelSpeedOut</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pVehicleSpeedEstimator_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id97" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id98" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id98"/>
+		<transition>
+			<source ref="id97"/>
+			<target ref="id98"/>
+			<label kind="synchronisation" x="-136" y="40">pVehicleSpeedEstimator_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pVehicleSpeedEstimator_VehicleSpeedEst:=(pVehicleSpeedEstimator_WheelSpeed_FLIn+
+pVehicleSpeedEstimator_WheelSpeed_FRIn+pVehicleSpeedEstimator_WheelSpeed_RLIn+
+pVehicleSpeedEstimator_WheelSpeed_RRIn)/4,
+pVehicleSpeedEstimator_e=pVehicleSpeedEstimator_e+0.25</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id98"/>
+			<target ref="id97"/>
+			<label kind="synchronisation" x="-144" y="-104">pVehicleSpeedEstimator_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pABS_FL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=10;
+int exec=1;
+</declaration>
+		<location id="id99" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id100" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id101" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="72" y="-112">x&lt;=exec &amp;&amp;
+pABS_FL_e'==4</label>
+		</location>
+		<location id="id102" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-263" y="-119">x&lt;=period &amp;&amp;
+pABS_FL_e'==0</label>
+		</location>
+		<init ref="id102"/>
+		<transition>
+			<source ref="id99"/>
+			<target ref="id102"/>
+		</transition>
+		<transition>
+			<source ref="id101"/>
+			<target ref="id99"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pABS_FL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id100"/>
+			<target ref="id101"/>
+			<label kind="synchronisation" x="-16" y="-160">pABS_FL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id102"/>
+			<target ref="id100"/>
+			<label kind="guard" x="-232" y="-256">x==period</label>
+			<label kind="assignment" x="-232" y="-240">pABS_FL_VehicleSpeedIn:=pVehicleSpeedEstimator_VehicleSpeedEst,
+pABS_FL_WheelSpeedIn:=pLDM_Sensor_FL_WheelSpeedOut,
+pABS_FL_RequestedTorqueIn:=pGlobalBrakeController_TorqRef_FLOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pABS_FL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id103" x="16" y="96">
+		</location>
+		<location id="id104" x="16" y="-40">
+			<name x="6" y="-70">Beh</name>
+			<committed/>
+		</location>
+		<location id="id105" x="-128" y="24">
+			<name x="-138" y="-6">Init</name>
+		</location>
+		<init ref="id105"/>
+		<transition>
+			<source ref="id104"/>
+			<target ref="id103"/>
+			<label kind="guard" x="72" y="56">(pABS_FL_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_FL_VehicleSpeedIn-pABS_FL_WheelSpeedIn/2)&lt;=pABS_FL_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="88">pABS_FL_ABSBrakeTorqueOut:=pABS_FL_RequestedTorqueIn,
+pABS_FL_e=pABS_FL_e+0.75</label>
+			<nail x="56" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id104"/>
+			<target ref="id103"/>
+			<label kind="guard" x="72" y="-8">(pABS_FL_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_FL_VehicleSpeedIn-pABS_FL_WheelSpeedIn/2)&gt;pABS_FL_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="24">pABS_FL_ABSBrakeTorqueOut:=0,
+pABS_FL_e=pABS_FL_e+0.5</label>
+		</transition>
+		<transition>
+			<source ref="id104"/>
+			<target ref="id103"/>
+			<label kind="guard" x="72" y="-56">pABS_FL_VehicleSpeedIn&lt;5</label>
+			<label kind="assignment" x="72" y="-40">pABS_FL_ABSBrakeTorqueOut:=pABS_FL_RequestedTorqueIn,
+pABS_FL_e=pABS_FL_e+0.25</label>
+			<nail x="-24" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id103"/>
+			<target ref="id105"/>
+			<label kind="synchronisation" x="-136" y="112">pABS_FL_beh_stop?</label>
+			<nail x="-96" y="96"/>
+		</transition>
+		<transition>
+			<source ref="id105"/>
+			<target ref="id104"/>
+			<label kind="synchronisation" x="-136" y="-64">pABS_FL_beh_start?</label>
+			<nail x="-88" y="-40"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pABS_FR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=10;
+int exec=1;
+</declaration>
+		<location id="id106" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id107" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id108" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="85" y="-119">x&lt;=exec &amp;&amp;
+pABS_FR_e'==4</label>
+		</location>
+		<location id="id109" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-119">x&lt;=period &amp;&amp;
+pABS_FR_e'==0</label>
+		</location>
+		<init ref="id109"/>
+		<transition>
+			<source ref="id106"/>
+			<target ref="id109"/>
+		</transition>
+		<transition>
+			<source ref="id108"/>
+			<target ref="id106"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pABS_FR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id107"/>
+			<target ref="id108"/>
+			<label kind="synchronisation" x="-16" y="-160">pABS_FR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id109"/>
+			<target ref="id107"/>
+			<label kind="guard" x="-192" y="-248">x==period</label>
+			<label kind="assignment" x="-192" y="-232">pABS_FR_VehicleSpeedIn:=pVehicleSpeedEstimator_VehicleSpeedEst,
+pABS_FR_WheelSpeedIn:=pLDM_Sensor_FR_WheelSpeedOut,
+pABS_FR_RequestedTorqueIn:=pGlobalBrakeController_TorqRef_FROut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pABS_FR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id110" x="16" y="-40">
+			<name x="6" y="-70">Beh</name>
+			<committed/>
+		</location>
+		<location id="id111" x="16" y="96">
+		</location>
+		<location id="id112" x="-128" y="24">
+			<name x="-138" y="-6">Init</name>
+		</location>
+		<init ref="id112"/>
+		<transition>
+			<source ref="id110"/>
+			<target ref="id111"/>
+			<label kind="guard" x="72" y="56">(pABS_FR_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_FR_VehicleSpeedIn-pABS_FR_WheelSpeedIn/2)&lt;=pABS_FR_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="88">pABS_FR_ABSBrakeTorqueOut:=pABS_FR_RequestedTorqueIn,
+pABS_FR_e=pABS_FR_e+0.75</label>
+			<nail x="56" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id110"/>
+			<target ref="id111"/>
+			<label kind="guard" x="72" y="-8">(pABS_FR_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_FR_VehicleSpeedIn-pABS_FR_WheelSpeedIn/2)&gt;pABS_FR_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="24">pABS_FR_ABSBrakeTorqueOut:=0, 
+pABS_FR_e=pABS_FR_e+0.5</label>
+		</transition>
+		<transition>
+			<source ref="id110"/>
+			<target ref="id111"/>
+			<label kind="guard" x="72" y="-56">pABS_FR_VehicleSpeedIn&lt;5</label>
+			<label kind="assignment" x="72" y="-40">pABS_FR_ABSBrakeTorqueOut:=pABS_FR_RequestedTorqueIn,
+pABS_FR_e=pABS_FR_e+0.25</label>
+			<nail x="-24" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id111"/>
+			<target ref="id112"/>
+			<label kind="synchronisation" x="-136" y="112">pABS_FR_beh_stop?</label>
+			<nail x="-96" y="96"/>
+		</transition>
+		<transition>
+			<source ref="id112"/>
+			<target ref="id110"/>
+			<label kind="synchronisation" x="-136" y="-64">pABS_FR_beh_start?</label>
+			<nail x="-88" y="-40"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pABS_RL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=10;
+int exec=1;
+</declaration>
+		<location id="id113" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id114" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id115" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pABS_RL_e'==4</label>
+		</location>
+		<location id="id116" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-263" y="-119">x&lt;=period &amp;&amp;
+pABS_RL_e'==0</label>
+		</location>
+		<init ref="id116"/>
+		<transition>
+			<source ref="id113"/>
+			<target ref="id116"/>
+		</transition>
+		<transition>
+			<source ref="id115"/>
+			<target ref="id113"/>
+			<label kind="guard" x="16" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pABS_RL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id114"/>
+			<target ref="id115"/>
+			<label kind="synchronisation" x="-16" y="-160">pABS_RL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id116"/>
+			<target ref="id114"/>
+			<label kind="guard" x="-192" y="-248">x==period</label>
+			<label kind="assignment" x="-192" y="-232">pABS_RL_VehicleSpeedIn:=pVehicleSpeedEstimator_VehicleSpeedEst,
+pABS_RL_WheelSpeedIn:=pLDM_Sensor_RL_WheelSpeedOut,
+pABS_RL_RequestedTorqueIn:=pGlobalBrakeController_TorqRef_RLOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pABS_RL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id117" x="16" y="-40">
+			<name x="6" y="-70">Beh</name>
+			<committed/>
+		</location>
+		<location id="id118" x="16" y="96">
+		</location>
+		<location id="id119" x="-128" y="24">
+			<name x="-138" y="-6">Init</name>
+		</location>
+		<init ref="id119"/>
+		<transition>
+			<source ref="id117"/>
+			<target ref="id118"/>
+			<label kind="guard" x="72" y="56">(pABS_RL_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_RL_VehicleSpeedIn-pABS_RL_WheelSpeedIn/2)&lt;=pABS_RL_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="88">pABS_RL_ABSBrakeTorqueOut:=pABS_RL_RequestedTorqueIn,
+pABS_RL_e=pABS_RL_e+0.75</label>
+			<nail x="56" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id117"/>
+			<target ref="id118"/>
+			<label kind="guard" x="72" y="-8">(pABS_RL_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_RL_VehicleSpeedIn-pABS_RL_WheelSpeedIn/2)&gt;pABS_RL_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="24">pABS_RL_ABSBrakeTorqueOut:=0,
+pABS_RL_e=pABS_RL_e+0.5</label>
+		</transition>
+		<transition>
+			<source ref="id117"/>
+			<target ref="id118"/>
+			<label kind="guard" x="72" y="-56">pABS_RL_VehicleSpeedIn&lt;5</label>
+			<label kind="assignment" x="72" y="-40">pABS_RL_ABSBrakeTorqueOut:=pABS_RL_RequestedTorqueIn,
+pABS_RL_e=pABS_RL_e+0.25</label>
+			<nail x="-24" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id118"/>
+			<target ref="id119"/>
+			<label kind="synchronisation" x="-136" y="112">pABS_RL_beh_stop?</label>
+			<nail x="-96" y="96"/>
+		</transition>
+		<transition>
+			<source ref="id119"/>
+			<target ref="id117"/>
+			<label kind="synchronisation" x="-136" y="-64">pABS_RL_beh_start?</label>
+			<nail x="-88" y="-40"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pABS_RR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=10;
+int exec=1;
+</declaration>
+		<location id="id120" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id121" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id122" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pABS_RR_e'==4</label>
+		</location>
+		<location id="id123" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-119">x&lt;=period  &amp;&amp;
+pABS_RR_e'==0</label>
+		</location>
+		<init ref="id123"/>
+		<transition>
+			<source ref="id120"/>
+			<target ref="id123"/>
+		</transition>
+		<transition>
+			<source ref="id122"/>
+			<target ref="id120"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pABS_RR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id121"/>
+			<target ref="id122"/>
+			<label kind="synchronisation" x="-16" y="-160">pABS_RR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id123"/>
+			<target ref="id121"/>
+			<label kind="guard" x="-200" y="-248">x==period</label>
+			<label kind="assignment" x="-200" y="-232">pABS_RR_VehicleSpeedIn:=pVehicleSpeedEstimator_VehicleSpeedEst,
+pABS_RR_WheelSpeedIn:=pLDM_Sensor_RR_WheelSpeedOut,
+pABS_RR_RequestedTorqueIn:=pGlobalBrakeController_TorqRef_RROut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pABS_RR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id124" x="16" y="-40">
+			<name x="6" y="-70">Beh</name>
+			<committed/>
+		</location>
+		<location id="id125" x="16" y="96">
+		</location>
+		<location id="id126" x="-128" y="24">
+			<name x="-138" y="-6">Init</name>
+		</location>
+		<init ref="id126"/>
+		<transition>
+			<source ref="id124"/>
+			<target ref="id125"/>
+			<label kind="guard" x="72" y="56">(pABS_RR_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_RR_VehicleSpeedIn-pABS_RR_WheelSpeedIn/2)&lt;=pABS_RR_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="88">pABS_RR_ABSBrakeTorqueOut:=pABS_RR_RequestedTorqueIn,
+pABS_RR_e=pABS_RR_e+0.75</label>
+			<nail x="56" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id124"/>
+			<target ref="id125"/>
+			<label kind="guard" x="72" y="-8">(pABS_RR_VehicleSpeedIn&gt;=5) &amp;&amp;
+(5*(pABS_RR_VehicleSpeedIn-pABS_RR_WheelSpeedIn/2)&gt;pABS_RR_VehicleSpeedIn)</label>
+			<label kind="assignment" x="72" y="24">pABS_RR_ABSBrakeTorqueOut:=0,
+pABS_RR_e=pABS_RR_e+0.5</label>
+		</transition>
+		<transition>
+			<source ref="id124"/>
+			<target ref="id125"/>
+			<label kind="guard" x="72" y="-56">pABS_RR_VehicleSpeedIn&lt;5</label>
+			<label kind="assignment" x="72" y="-40">pABS_RR_ABSBrakeTorqueOut:=pABS_RR_RequestedTorqueIn,
+pABS_RR_e=pABS_RR_e+0.25</label>
+			<nail x="-24" y="32"/>
+		</transition>
+		<transition>
+			<source ref="id125"/>
+			<target ref="id126"/>
+			<label kind="synchronisation" x="-136" y="112">pABS_RR_beh_stop?</label>
+			<nail x="-96" y="96"/>
+		</transition>
+		<transition>
+			<source ref="id126"/>
+			<target ref="id124"/>
+			<label kind="synchronisation" x="-136" y="-64">pABS_RR_beh_start?</label>
+			<nail x="-88" y="-40"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Brake_FL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id127" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id128" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id129" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pLDM_Brake_FL_e'==2</label>
+		</location>
+		<location id="id130" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-110">x&lt;=period &amp;&amp;
+pLDM_Brake_FL_e'==0</label>
+		</location>
+		<init ref="id130"/>
+		<transition>
+			<source ref="id127"/>
+			<target ref="id130"/>
+			<label kind="synchronisation" x="-256" y="-56">LDMAcuatorFL2ActuatorFL!</label>
+		</transition>
+		<transition>
+			<source ref="id129"/>
+			<target ref="id127"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pLDM_Brake_FL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id128"/>
+			<target ref="id129"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Brake_FL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id130"/>
+			<target ref="id128"/>
+			<label kind="guard" x="-264" y="-232">x==period</label>
+			<label kind="assignment" x="-264" y="-216">pLDM_Brake_FL_TorqCmdIn:=pABS_FL_ABSBrakeTorqueOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Brake_FL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id131" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id132" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id132"/>
+		<transition>
+			<source ref="id131"/>
+			<target ref="id132"/>
+			<label kind="synchronisation" x="-136" y="40">pLDM_Brake_FL_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pLDM_Brake_FL_ElSignalOut:=pLDM_Brake_FL_TorqCmdIn,
+pLDM_Brake_FL_e=pLDM_Brake_FL_e+0.2</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id132"/>
+			<target ref="id131"/>
+			<label kind="synchronisation" x="-144" y="-104">pLDM_Brake_FL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Brake_FR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id133" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id134" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id135" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="80" y="-112">x&lt;=exec &amp;&amp;
+pLDM_Brake_FR_e'==2</label>
+		</location>
+		<location id="id136" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-110">x&lt;=period &amp;&amp;
+pLDM_Brake_FR_e'==0</label>
+		</location>
+		<init ref="id136"/>
+		<transition>
+			<source ref="id133"/>
+			<target ref="id136"/>
+			<label kind="synchronisation" x="-272" y="-56">LDMAcuatorFR2ActuatorFR!</label>
+		</transition>
+		<transition>
+			<source ref="id135"/>
+			<target ref="id133"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pLDM_Brake_FR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id134"/>
+			<target ref="id135"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Brake_FR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id136"/>
+			<target ref="id134"/>
+			<label kind="guard" x="-200" y="-216">x==period</label>
+			<label kind="assignment" x="-200" y="-200">pLDM_Brake_FR_TorqCmdIn:=pABS_FR_ABSBrakeTorqueOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Brake_FR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id137" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id138" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id138"/>
+		<transition>
+			<source ref="id137"/>
+			<target ref="id138"/>
+			<label kind="synchronisation" x="-136" y="40">pLDM_Brake_FR_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pLDM_Brake_FR_ElSignalOut:=pLDM_Brake_FR_TorqCmdIn,
+pLDM_Brake_FR_e=pLDM_Brake_FR_e+0.2</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id138"/>
+			<target ref="id137"/>
+			<label kind="synchronisation" x="-144" y="-104">pLDM_Brake_FR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Brake_RL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id139" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id140" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id141" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pLDM_Brake_RL_e'==2</label>
+		</location>
+		<location id="id142" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-280" y="-110">x&lt;=period &amp;&amp;
+pLDM_Brake_RL_e'==0</label>
+		</location>
+		<init ref="id142"/>
+		<transition>
+			<source ref="id139"/>
+			<target ref="id142"/>
+			<label kind="synchronisation" x="-280" y="-64">LDMAcuatorRL2ActuatorRL!</label>
+		</transition>
+		<transition>
+			<source ref="id141"/>
+			<target ref="id139"/>
+			<label kind="guard" x="8" y="-64">x==exec</label>
+			<label kind="synchronisation" x="8" y="-48">pLDM_Brake_RL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id140"/>
+			<target ref="id141"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Brake_RL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id142"/>
+			<target ref="id140"/>
+			<label kind="guard" x="-232" y="-224">x==period</label>
+			<label kind="assignment" x="-232" y="-208">pLDM_Brake_RL_TorqCmdIn:=pABS_RL_ABSBrakeTorqueOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Brake_RL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id143" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id144" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id144"/>
+		<transition>
+			<source ref="id143"/>
+			<target ref="id144"/>
+			<label kind="synchronisation" x="-136" y="40">pLDM_Brake_RL_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pLDM_Brake_RL_ElSignalOut:=pLDM_Brake_RL_TorqCmdIn,
+pLDM_Brake_RL_e=pLDM_Brake_RL_e+0.2</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id144"/>
+			<target ref="id143"/>
+			<label kind="synchronisation" x="-144" y="-104">pLDM_Brake_RL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pLDM_Brake_RR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int period=5;
+int exec=1;
+</declaration>
+		<location id="id145" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id146" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id147" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pLDM_Brake_RR_e'==2</label>
+		</location>
+		<location id="id148" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-110">x&lt;=period &amp;&amp;
+pLDM_Brake_RR_e'==0</label>
+		</location>
+		<init ref="id148"/>
+		<transition>
+			<source ref="id145"/>
+			<target ref="id148"/>
+			<label kind="synchronisation" x="-280" y="-64">LDMAcuatorRR2ActuatorRR!</label>
+		</transition>
+		<transition>
+			<source ref="id147"/>
+			<target ref="id145"/>
+			<label kind="guard" x="8" y="-72">x==exec</label>
+			<label kind="synchronisation" x="8" y="-56">pLDM_Brake_RR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id146"/>
+			<target ref="id147"/>
+			<label kind="synchronisation" x="-16" y="-160">pLDM_Brake_RR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id148"/>
+			<target ref="id146"/>
+			<label kind="guard" x="-216" y="-224">x==period</label>
+			<label kind="assignment" x="-216" y="-208">pLDM_Brake_RR_TorqCmdIn:=pABS_RR_ABSBrakeTorqueOut,
+ x:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pLDM_Brake_RR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id149" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id150" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id150"/>
+		<transition>
+			<source ref="id149"/>
+			<target ref="id150"/>
+			<label kind="synchronisation" x="-136" y="40">pLDM_Brake_RR_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pLDM_Brake_RR_ElSignalOut:=pLDM_Brake_RR_TorqCmdIn,
+pLDM_Brake_RR_e=pLDM_Brake_RR_e+0.2</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id150"/>
+			<target ref="id149"/>
+			<label kind="synchronisation" x="-144" y="-104">pLDM_Brake_RR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Brake_FL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x; 
+int exec=1;</declaration>
+		<location id="id151" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id152" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id153" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pHW_Brake_FL_e'==1</label>
+		</location>
+		<location id="id154" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-93">pHW_Brake_FL_e'==0</label>
+		</location>
+		<init ref="id154"/>
+		<transition>
+			<source ref="id151"/>
+			<target ref="id154"/>
+		</transition>
+		<transition>
+			<source ref="id153"/>
+			<target ref="id151"/>
+			<label kind="guard" x="8" y="-85">x==exec</label>
+			<label kind="synchronisation" x="8" y="-72">pHW_Brake_FL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id152"/>
+			<target ref="id153"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Brake_FL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id154"/>
+			<target ref="id152"/>
+			<label kind="synchronisation" x="-297" y="-228">LDMAcuatorFL2ActuatorFL?</label>
+			<label kind="assignment" x="-297" y="-212">x:=0,
+pHW_Brake_FL_ElSignalIn:=pLDM_Brake_FL_ElSignalOut</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Brake_FL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id155" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id156" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id156"/>
+		<transition>
+			<source ref="id155"/>
+			<target ref="id156"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Brake_FL_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Brake_FL_BrakeTorqueOut:=pHW_Brake_FL_ElSignalIn,
+pHW_Brake_FL_e=pHW_Brake_FL_e+0.15</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id156"/>
+			<target ref="id155"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Brake_FL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Brake_FR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int exec=1;</declaration>
+		<location id="id157" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id158" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id159" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pHW_Brake_FR_e'==1</label>
+		</location>
+		<location id="id160" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-263" y="-85">pHW_Brake_FR_e'==0</label>
+		</location>
+		<init ref="id160"/>
+		<transition>
+			<source ref="id157"/>
+			<target ref="id160"/>
+		</transition>
+		<transition>
+			<source ref="id159"/>
+			<target ref="id157"/>
+			<label kind="guard" x="8" y="-76">x==exec</label>
+			<label kind="synchronisation" x="8" y="-59">pHW_Brake_FR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id158"/>
+			<target ref="id159"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Brake_FR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id160"/>
+			<target ref="id158"/>
+			<label kind="synchronisation" x="-221" y="-229">LDMAcuatorFR2ActuatorFR?</label>
+			<label kind="assignment" x="-221" y="-212">x:=0,
+pHW_Brake_FR_ElSignalIn:=pLDM_Brake_FR_ElSignalOut</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Brake_FR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id161" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id162" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id162"/>
+		<transition>
+			<source ref="id161"/>
+			<target ref="id162"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Brake_FR_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Brake_FR_BrakeTorqueOut:=pHW_Brake_FR_ElSignalIn,
+pHW_Brake_FR_e=pHW_Brake_FR_e+0.15</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id162"/>
+			<target ref="id161"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Brake_FR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Brake_RL_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x; 
+int exec=1;</declaration>
+		<location id="id163" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id164" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id165" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="76" y="-119">x&lt;=exec &amp;&amp;
+pHW_Brake_RL_e'==1</label>
+		</location>
+		<location id="id166" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-272" y="-93">pHW_Brake_RL_e'==0</label>
+		</location>
+		<init ref="id166"/>
+		<transition>
+			<source ref="id163"/>
+			<target ref="id166"/>
+		</transition>
+		<transition>
+			<source ref="id165"/>
+			<target ref="id163"/>
+			<label kind="guard" x="17" y="-85">x==exec</label>
+			<label kind="synchronisation" x="8" y="-68">pHW_Brake_RL_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id164"/>
+			<target ref="id165"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Brake_RL_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id166"/>
+			<target ref="id164"/>
+			<label kind="synchronisation" x="-187" y="-228">LDMAcuatorRL2ActuatorRL?</label>
+			<label kind="assignment" x="-187" y="-212">x:=0, 
+pHW_Brake_RL_ElSignalIn:=pLDM_Brake_RL_ElSignalOut</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Brake_RL_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id167" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id168" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id168"/>
+		<transition>
+			<source ref="id167"/>
+			<target ref="id168"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Brake_RL_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Brake_RL_BrakeTorqueOut:=pHW_Brake_RL_ElSignalIn,
+pHW_Brake_RL_e=pHW_Brake_RL_e+0.15</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id168"/>
+			<target ref="id167"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Brake_RL_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">pHW_Brake_RR_CTRL</name>
+		<declaration>// Place local declarations here.
+clock x;
+int exec=1;</declaration>
+		<location id="id169" x="-40" y="-40">
+			<name x="-56" y="-72">Write</name>
+			<committed/>
+		</location>
+		<location id="id170" x="-40" y="-152">
+			<name x="-50" y="-182">Read</name>
+			<committed/>
+		</location>
+		<location id="id171" x="56" y="-104">
+			<name x="46" y="-134">Exec</name>
+			<label kind="invariant" x="85" y="-119">x&lt;=exec &amp;&amp; 
+pHW_Brake_RR_e'==1</label>
+		</location>
+		<location id="id172" x="-144" y="-104">
+			<name x="-154" y="-134">Idle</name>
+			<label kind="invariant" x="-263" y="-85">pHW_Brake_RR_e'==0</label>
+		</location>
+		<init ref="id172"/>
+		<transition>
+			<source ref="id169"/>
+			<target ref="id172"/>
+		</transition>
+		<transition>
+			<source ref="id171"/>
+			<target ref="id169"/>
+			<label kind="guard" x="8" y="-76">x==exec</label>
+			<label kind="synchronisation" x="8" y="-59">pHW_Brake_RR_beh_stop!</label>
+		</transition>
+		<transition>
+			<source ref="id170"/>
+			<target ref="id171"/>
+			<label kind="synchronisation" x="-16" y="-160">pHW_Brake_RR_beh_start!</label>
+		</transition>
+		<transition>
+			<source ref="id172"/>
+			<target ref="id170"/>
+			<label kind="synchronisation" x="-212" y="-228">LDMAcuatorRR2ActuatorRR?</label>
+			<label kind="assignment" x="-212" y="-212">x:=0, 
+pHW_Brake_RR_ElSignalIn:=pLDM_Brake_RR_ElSignalOut</label>
+		</transition>
+	</template>
+	<template>
+		<name x="0" y="-24">pHW_Brake_RR_BEH</name>
+		<declaration>// Place local declarations here.
+</declaration>
+		<location id="id173" x="0" y="-24">
+			<name x="-10" y="-54">Beh</name>
+		</location>
+		<location id="id174" x="-176" y="-24">
+			<name x="-186" y="-54">Init</name>
+		</location>
+		<init ref="id174"/>
+		<transition>
+			<source ref="id173"/>
+			<target ref="id174"/>
+			<label kind="synchronisation" x="-136" y="40">pHW_Brake_RR_beh_stop?</label>
+			<label kind="assignment" x="-136" y="56">pHW_Brake_RR_BrakeTorqueOut:=pHW_Brake_RR_ElSignalIn,
+pHW_Brake_RR_e=pHW_Brake_RR_e+0.15</label>
+			<nail x="-88" y="40"/>
+		</transition>
+		<transition>
+			<source ref="id174"/>
+			<target ref="id173"/>
+			<label kind="synchronisation" x="-144" y="-104">pHW_Brake_RR_beh_start?</label>
+			<nail x="-88" y="-80"/>
+		</transition>
+	</template>
+	<system>
+// Place template instantiations here.// List one or more processes to be composed into a system.
+
+system Monitor, Energy_M, pBrakePedalSensor_CTRL, pBrakePedalSensor_BEH, pLDM_Sensor_FL_CTRL, pLDM_Sensor_FL_BEH, pLDM_Brake_FL_CTRL, pLDM_Brake_FL_BEH, pABS_FL_CTRL, pABS_FL_BEH, pLDM_Sensor_FR_CTRL, pLDM_Sensor_FR_BEH, pLDM_Brake_FR_CTRL, pLDM_Brake_FR_BEH, pABS_FR_CTRL, pABS_FR_BEH, pLDM_Sensor_RL_CTRL, pLDM_Sensor_RL_BEH, pLDM_Brake_RL_CTRL, pLDM_Brake_RL_BEH, pABS_RL_CTRL, pABS_RL_BEH, pLDM_Sensor_RR_CTRL, pLDM_Sensor_RR_BEH, pLDM_Brake_RR_CTRL, pLDM_Brake_RR_BEH, pABS_RR_CTRL, pABS_RR_BEH, pBrakePedalLDM_CTRL, pBrakePedalLDM_BEH, pHW_Brake_FL_CTRL, pHW_Brake_FL_BEH, pHW_Brake_FR_CTRL, pHW_Brake_FR_BEH, pHW_Brake_RL_CTRL, pHW_Brake_RL_BEH, pHW_Brake_RR_CTRL, pHW_Brake_RR_BEH, pHW_Encoder_FL_CTRL, pHW_Encoder_FL_BEH, pHW_Encoder_FR_CTRL, pHW_Encoder_FR_BEH, pHW_Encoder_RL_CTRL, pHW_Encoder_RL_BEH, pHW_Encoder_RR_CTRL, pHW_Encoder_RR_BEH, pBrakeTorqueMap_CTRL, pBrakeTorqueMap_BEH, pGlobalBrakeController_CTRL, pGlobalBrakeController_BEH, pVehicleSpeedEstimator_CTRL, pVehicleSpeedEstimator_BEH;
+</system>
+	<queries>
+		<query>
+			<formula>simulate 50 [&lt;=50] {pBrakePedalLDM_ElSignalIn, pLDM_Sensor_FL_TicksIn, pLDM_Sensor_FR_TicksIn, pLDM_Sensor_RL_TicksIn,  pLDM_Sensor_RR_TicksIn, energy}
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E[&lt;=50; 100](max: energy)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>Pr[&lt;=50]( [] energy&lt;=447.22)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>simulate 100[&lt;=60]{energy&gt;=501.5}
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>simulate 1[&lt;=50]{energy, pVehicleSpeedEstimator_e, pABS_FL_e, pLDM_Brake_FL_e, pHW_Brake_FL_e}
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>simulate 1[&lt;=100]{energy, pBrakePedalSensor_e, pBrakePedalLDM_e, pBrakeTorqueMap_e,pGlobalBrakeController_e, pHW_Encoder_FL_e, pVehicleSpeedEstimator_e}
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>
