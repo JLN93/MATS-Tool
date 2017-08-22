@@ -37,6 +37,17 @@ namespace MATS
         {
             InitializeComponent();
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            if (!File.Exists(@".\bin-win32\verifyta.exe"))
+            {
+                MessageBox.Show(
+                    "Verifyta.exe could not be found! Please verify that it's located inside \"./bin-win32/\".\n" +
+                    "UPPAAL SMC can be downloaded at http://www.uppaal.org/.",
+                    "Verifyta.exe is missing!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
+                Environment.Exit(2);
+            }
         }
 
         private void Period_Changed(object sender, EventArgs e)
