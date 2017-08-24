@@ -7,9 +7,9 @@ using System.Text;
 namespace MATS
 {
     //
-    class Mutator
+    class MutantHandler
     {
-        private class Mutants
+       /* private class Mutants
         {
             public int model;
             public int simulation;
@@ -20,22 +20,30 @@ namespace MATS
                 this.simulation = simulation;
                 this.mutant = mutant;
             }
-        }
+        }*/
 
         //first list is for simulations second is for parameters
         private List<List<ExtractedInputs>> extractedInputs;
 
-        public Mutator()
+        public MutantHandler()
         {
         }
         public List<List<ExtractedInputs>> GetExtractedInputs()
         {
             return extractedInputs;
         }
+
+        /// <summary>
+        /// Multiplies and modifies the mutants to contain the appropiate inputs and returns the organized filelist
+        /// </summary>
         public List<List<string>> MutateFiles(string[] mutationModels, int simulations)
         {
             List<List<string>> fileList = new List<List<string>>();
             StringBuilder sB;
+            if (extractedInputs == null)
+            {
+                throw new NullReferenceException("ExtractedInputs");
+            }
             for (int i = 0; i < simulations; i++)
             {
                 fileList.Add(new List<string>());
@@ -59,6 +67,12 @@ namespace MATS
             }
             return fileList;
         }
+        /// <summary>
+        /// Method to extract required inputs from a TraceManager to later be put in the mutated models
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="tm"></param>
+        /// <param name="simulations">Total number of simulations to build for</param>
         public void inputBuilder(string[] inputs, TraceManager tm, int simulations)
         {
             extractedInputs = new List<List<ExtractedInputs>>();
@@ -72,6 +86,7 @@ namespace MATS
                 }
             }
         }
+
         public string printInputs(int simulations)
         {
             string exInputs = "";
