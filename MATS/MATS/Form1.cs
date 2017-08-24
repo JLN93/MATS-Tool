@@ -36,7 +36,9 @@ namespace MATS
         public Form1()
         {
             InitializeComponent();
+            // Sets Culture to make sure the decimal sign is a dot
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            // Startup check for verifyta.exe, if it isn't present then exit application
             if (!File.Exists(@".\bin-win32\verifyta.exe"))
             {
                 MessageBox.Show(
@@ -49,7 +51,7 @@ namespace MATS
                 Environment.Exit(2);
             }
         }
-
+        // Event method to calculate the simulation time based on periodCount * periodLength + (periodLength - 1)
         private void Period_Changed(object sender, EventArgs e)
         {
             simTimeNumeric.Value = periodCountNumeric.Value * periodLengthNumeric.Value + (periodLengthNumeric.Value - 1);
@@ -65,111 +67,72 @@ namespace MATS
             inputs = InputQueryTxtBox.Lines;
             outputQuery = outputQueryTxtBox.Text;
         }
-
+        
         private void runVerifyta_Click(object sender, EventArgs e)
         {
-            var totalWatch = System.Diagnostics.Stopwatch.StartNew();
             if (string.IsNullOrEmpty(modelFilePath) || mutantsFilePath == null)
             {
                 MessageBox.Show("Please select a model first.");
                 return;
             }
+            setInternalVar();
             string tmpVerifytaName = verifyta_button.Text;
             verifyta_button.Text = "Please Wait";
             this.Refresh();
-            //TraceManager object to hold each models trace
-            TraceManager tmOriginal;
-            //simulations->models
-            List<List<TraceManager>> tmMutants = new List<List<TraceManager>>();
-            TraceManager[][] tmMutantArray;
+            var totalWatch = System.Diagnostics.Stopwatch.StartNew();
 
-            setInternalVar();
+            MutantHandler mHandler = new MutantHandler();
 
-            //Container for UPPAAL output
-            string uppaalOutput = string.Empty;
-
-            //builds query based on the inputs on the form
-            UPPAALSMCHandler.BuildQuery(simruns, simTime, inputs, outputQuery);
             verifyta_button.Text = "Simulating Model";
             this.Refresh();
 
-            //Runs UPPAAL Program, needs to be extended with model to simulate and error handling
-            try
-            {
-                tmOriginal = UPPAALSMCHandler.RunUPPAAL(modelFilePath, simruns);
-            }
-            catch(ArgumentException outputE)
-            {
-                MessageBox.Show(outputE.Message);
-                return;
-            }
+            //TraceManager object to hold each models trace
+            TraceManager tmOriginal = new TraceManager();
+            //simulations->models
+            TraceManager[][] tmMutantArray;
+            // 2D list to record filepath to each mutated file
+            List<List<string>> mutatedFiles;
+            // 2D List to record the result of the mutation analysis
+            List<List<int>> resultTable;
+
+            // Runs verifitya on the Reference model
+            tmOriginal = SimulateModel();
 
             //interpolate to get input values
             tmOriginal.Interpolate(tickSize, simTime, tickSize / 2);
 
-            Mutator m = new Mutator();
-            m.inputBuilder(inputs, tmOriginal, simruns);
-            List<List<string>> mutatedFiles;
+            // Build the inputs based on the interpolated values
+            mHandler.inputBuilder(inputs, tmOriginal, simruns);
 
             //generate mutants and organize them in a 2d list with simulation->mutant
             try
             {
-                mutatedFiles = m.MutateFiles(mutantsFilePath, simruns);
+                mutatedFiles = mHandler.MutateFiles(mutantsFilePath, simruns);
             }
             catch (ApplicationException ex)
             {
                 MessageBox.Show(ex.Message);
-                return;
+                throw;
             }
-
-            UPPAALSMCHandler.BuildQuery(1, simTime, null, outputQuery);
 
             tmMutantArray = new TraceManager[mutatedFiles.Count][];
+
             verifyta_button.Text = "Simulating Mutants";
             this.Refresh();
-            try
-            {
-                Parallel.For(0, mutatedFiles.Count, i =>
-                {
-                    tmMutantArray[i] = new TraceManager[mutatedFiles[i].Count];
 
-                    for (int j = 0; j < mutatedFiles[i].Count; j++)
-                    {
-                        tmMutantArray[i][j] = UPPAALSMCHandler.RunUPPAAL(mutatedFiles[i][j], simruns);
+            // Runs the verifyta simulation on the mutants and stores the results in tmMutantArray
+            tmMutantArray = SimulateMutants(mutatedFiles);
 
-                    }
-                }
-                );
-            }
-            catch (ArgumentException outputE)
-            {
-                MessageBox.Show(outputE.Message);
-                return;
-            }
+            // TODO: place this in the resultForm
+            resultTable = compareMutants(tmOriginal, tmMutantArray, mutatedFiles.Count);
 
-            //compare mutants
-            List<List<int>> resultTable = new List<List<int>>();
-            tmOriginal.Interpolate(stepSize, simTime);
-            for (int i = 0; i < mutatedFiles.Count; i++)
-            {
-                resultTable.Add(new List<int>());
-                List<PointF> reference = tmOriginal.GetTrace(outputQuery).GetInterpolatedTrace(i);
-                foreach (TraceManager items in tmMutantArray[i])
-                {
-                    items.Interpolate(stepSize, simTime);
-                    List<PointF> mutant = items.GetTrace(0).GetInterpolatedTrace(0);
-                    int result = CompareOutput(reference, mutant, (float)deltaValue);
-                    if (result == -1)
-                    {
-                        Console.WriteLine("unequal length");
-                    }
-                    resultTable[i].Add(result);
-                }
-            }
-            ResultForm RF = new ResultForm(resultTable, m.GetExtractedInputs());
+            verifyta_button.Text = "Done!";
+            this.Refresh();
             totalWatch.Stop();
             var TotalelapsedS = totalWatch.ElapsedMilliseconds / 1000;
             MessageBox.Show("Total Execution Time: " + TotalelapsedS.ToString() + "s");
+
+            ResultForm RF = new ResultForm(resultTable, mHandler.GetExtractedInputs());
             RF.ShowDialog();
             verifyta_button.Text = tmpVerifytaName;
         }
@@ -222,6 +185,74 @@ namespace MATS
                 mutantsFilePath = selectModelDialog.FileNames;
                 labelSelectedMutants.Text = mutantsFilePath.Length + " Mutants Selected";
             }
+        }
+
+        private TraceManager SimulateModel()
+        {
+            TraceManager tmOriginal = new TraceManager();
+            //builds query based on the inputs on the form
+            UPPAALSMCHandler.BuildQuery(simruns, simTime, inputs, outputQuery);
+
+            try
+            {
+                //Runs UPPAAL Program, needs to be extended with error handling
+                tmOriginal = UPPAALSMCHandler.RunUPPAAL(modelFilePath, simruns);
+            }
+            catch (ArgumentException outputE)
+            {
+                MessageBox.Show(outputE.Message);
+                return null;
+            }
+            return tmOriginal;
+        }
+
+        private TraceManager[][] SimulateMutants(List<List<string>> mutatedFiles)
+        {
+            TraceManager[][] tmMutantArray = new TraceManager[mutatedFiles.Count][];
+            UPPAALSMCHandler.BuildQuery(1, simTime, null, outputQuery);
+            try
+            {
+                Parallel.For(0, mutatedFiles.Count, i =>
+                {
+                    tmMutantArray[i] = new TraceManager[mutatedFiles[i].Count];
+
+                    for (int j = 0; j < mutatedFiles[i].Count; j++)
+                    {
+                        tmMutantArray[i][j] = UPPAALSMCHandler.RunUPPAAL(mutatedFiles[i][j], simruns);
+                    }
+                }
+                );
+            }
+            catch (ArgumentException outputE)
+            {
+                MessageBox.Show(outputE.Message);
+                return null;
+            }
+            return tmMutantArray;
+        }
+
+        private List<List<int>> compareMutants(TraceManager tmOriginal, TraceManager[][] tmMutantArray, int mutatedFiles)
+        {
+            //compare mutants
+            List<List<int>> resultTable = new List<List<int>>();
+            tmOriginal.Interpolate(stepSize, simTime);
+            for (int i = 0; i < mutatedFiles; i++)
+            {
+                resultTable.Add(new List<int>());
+                List<PointF> reference = tmOriginal.GetTrace(outputQuery).GetInterpolatedTrace(i);
+                foreach (TraceManager items in tmMutantArray[i])
+                {
+                    items.Interpolate(stepSize, simTime);
+                    List<PointF> mutant = items.GetTrace(0).GetInterpolatedTrace(0);
+                    int result = CompareOutput(reference, mutant, (float)deltaValue);
+                    if (result == -1)
+                    {
+                        Console.WriteLine("unequal length");
+                    }
+                    resultTable[i].Add(result);
+                }
+            }
+            return resultTable;
         }
 
     }
