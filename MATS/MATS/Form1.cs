@@ -93,7 +93,7 @@ namespace MATS
             // 2D list to record filepath to each mutated file
             List<List<string>> mutatedFiles;
             // 2D List to record the result of the mutation analysis
-            List<List<int>> resultTable;
+            //List<List<int>> resultTable;
 
             // Runs verifitya on the Reference model
             tmOriginal = SimulateModel();
@@ -124,15 +124,16 @@ namespace MATS
             tmMutantArray = SimulateMutants(mutatedFiles);
 
             // TODO: place this in the resultForm
-            resultTable = compareMutants(tmOriginal, tmMutantArray, mutatedFiles.Count);
+            //resultTable = compareMutants(tmOriginal, tmMutantArray, mutatedFiles.Count);
 
             verifyta_button.Text = "Done!";
             this.Refresh();
             totalWatch.Stop();
             var TotalelapsedS = totalWatch.ElapsedMilliseconds / 1000;
             MessageBox.Show("Total Execution Time: " + TotalelapsedS.ToString() + "s");
-
-            ResultForm RF = new ResultForm(resultTable, mHandler.GetExtractedInputs());
+            ResultHandler testSelector = new ResultHandler(tmOriginal, tmMutantArray, mutatedFiles.Count, stepSize, simTime, deltaValue);
+            ResultForm RF = new ResultForm(testSelector, outputQuery, mHandler.GetExtractedInputs());
+            //ResultForm RF = new ResultForm(resultTable, mHandler.GetExtractedInputs());
             RF.ShowDialog();
             verifyta_button.Text = tmpVerifytaName;
         }
@@ -229,30 +230,6 @@ namespace MATS
                 return null;
             }
             return tmMutantArray;
-        }
-
-        private List<List<int>> compareMutants(TraceManager tmOriginal, TraceManager[][] tmMutantArray, int mutatedFiles)
-        {
-            //compare mutants
-            List<List<int>> resultTable = new List<List<int>>();
-            tmOriginal.Interpolate(stepSize, simTime);
-            for (int i = 0; i < mutatedFiles; i++)
-            {
-                resultTable.Add(new List<int>());
-                List<PointF> reference = tmOriginal.GetTrace(outputQuery).GetInterpolatedTrace(i);
-                foreach (TraceManager items in tmMutantArray[i])
-                {
-                    items.Interpolate(stepSize, simTime);
-                    List<PointF> mutant = items.GetTrace(0).GetInterpolatedTrace(0);
-                    int result = CompareOutput(reference, mutant, (float)deltaValue);
-                    if (result == -1)
-                    {
-                        Console.WriteLine("unequal length");
-                    }
-                    resultTable[i].Add(result);
-                }
-            }
-            return resultTable;
         }
 
     }
