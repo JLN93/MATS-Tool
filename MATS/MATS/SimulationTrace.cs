@@ -8,58 +8,109 @@ namespace MATS
 {
     public class SimulationTrace
     {
-        private int simulations;
+        /// <summary>
+        /// Used to store the original trace. First list represents the simulations and second list is the pointlist of the tracepoints.
+        /// </summary>
         private List<List<PointF>> traces;
+        /// <summary>
+        /// Used to store the interpolated trace. First list represents the simulations and second list is the pointlist of the tracepoints.
+        /// </summary>
         private List<List<PointF>> interpolatedTraces;
-
+        /// <summary>
+        /// Returns or sets the parameter name.
+        /// </summary>
         public string valueName { get; private set; }
 
+        /// <summary>
+        /// Creates an empty trace with the name of paramName.
+        /// </summary>
+        /// <param name="paramName">The parameter name.</param>
         public SimulationTrace(string paramName)
         {
             traces = new List<List<PointF>>();
             valueName = paramName;
         }
+        /// <summary>
+        /// Creates a filled trace.
+        /// </summary>
+        /// <param name="paramName">The parameter name.</param>
+        /// <param name="trace">The Simulation trace.</param>
         public SimulationTrace(string paramName, List<PointF> trace)
         {
             traces = new List<List<PointF>>();
             valueName = paramName;
             traces.Add(trace);
         }
+        /// <summary>
+        /// Returns a trace.
+        /// </summary>
+        /// <param name="simulationRun">The simulation to return, 0 indexed.</param>
+        /// <returns></returns>
         public List<PointF> GetTrace(int simulationRun)
         {
             return traces[simulationRun];
         }
-        // 0-based index
+
+        /// <summary>
+        /// Returns an interpolated trace.
+        /// </summary>
+        /// <param name="simulationRun">The simulation to return, 0 indexed.</param>
+        /// <returns></returns>
         public List<PointF> GetInterpolatedTrace(int simulationRun)
         {
             if (interpolatedTraces != null)
                 return interpolatedTraces[simulationRun];
             else
-            return null;
-            
+                return null;
         }
-        // 0-based index
+
+        /// <summary>
+        /// Returns the number of points in the trace. 
+        /// </summary>
+        /// <param name="index">0-based index</param>
+        /// <returns></returns>
         public int GetTraceLength(int index)
         {
-            return ((getSimCount()-1) < index) ? -1 : traces[index].Count();
+            return ((getSimCount() - 1) < index) ? -1 : traces[index].Count();
         }
+        /// <summary>
+        /// Returns the number of points in the interpolated trace. 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public int GetInterpolatedTraceLength(int index)
         {
             return ((getInterpolatedSimCount() - 1) < index) ? -1 : interpolatedTraces[index].Count();
         }
+        /// <summary>
+        /// Adds a new simulation trace to the list.
+        /// </summary>
+        /// <param name="newtrace">The trace to add.</param>
         public void AddTrace(List<PointF> newtrace)
         {
             traces.Add(newtrace);
-            simulations++;
         }
+        /// <summary>
+        /// Returns the number of simulations in the trace list.
+        /// </summary>
+        /// <returns></returns>
         public int getSimCount()
         {
             return traces.Count();
         }
+        /// <summary>
+        /// Returns the number of interpolated simulations in the trace list.
+        /// </summary>
+        /// <returns></returns>
         public int getInterpolatedSimCount()
         {
             return traces.Count();
         }
+        /// <summary>
+        /// Prints a simulation.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns>Formated output.</returns>
         public string PrintSimulation(int i)
         {
             string output = valueName + "\r\nSimulation " + (i + 1) + ":\r\n";
@@ -69,121 +120,103 @@ namespace MATS
             }
             return output;
         }
-
+        /// <summary>
+        /// Prints all simuations.
+        /// </summary>
+        /// <returns></returns>
         public string PrintSimulation()
         {
             StringBuilder sb = new StringBuilder();
+            // Starts string with "'Parameter name':"
             sb.Append(valueName + ": ");
 
             for (int i = 0; i < getSimCount(); i++)
             {
+                // Adds the header for the simulation
                 sb.Append("\r\nSimulation " + (i + 1) + ":\r\n");
                 foreach (PointF item in traces[i])
                 {
+                    // Adds each point in simulation
                     sb.Append("(" + item.X + "," + item.Y + ") ");
                 }
             }
             return sb.ToString();
         }
-
+        /// <summary>
+        /// Prints all interpolated simulation.
+        /// </summary>
+        /// <returns></returns>
         public string PrintInterpolatedSimulation()
         {
             StringBuilder sb = new StringBuilder();
+            // Starts string with "'Parameter name':"
             sb.Append(valueName + ": ");
 
             for (int i = 0; i < getInterpolatedSimCount(); i++)
             {
+                // Adds the header for the simulation
                 sb.Append("\r\nSimulation " + (i + 1) + ":\r\n");
                 foreach (PointF item in interpolatedTraces[i])
                 {
+                    // Adds each point in simulation
                     sb.Append("(" + item.X + "," + item.Y + ") ");
                 }
             }
             return sb.ToString();
         }
-        public string OLDPrintInterpolatedSimulation()
-        {
-            string output = valueName + ": ";
 
-            for (int i = 0; i < getInterpolatedSimCount(); i++)
-            {
-                output += "\r\nSimulation " + (i + 1) + ":\r\n";
-                foreach (PointF item in interpolatedTraces[i])
-                {
-                    output += "(" + item.X + "," + item.Y + ") ";
-                }
-            }
-            return output;
-        }
-
-        //interpolate all simulations
-        public void interpolateTraces(decimal stepSize, decimal simTime)
-        {
-            interpolatedTraces = new List<List<PointF>>();
-            //loop through "simulations"
-            for (int i = 0; i < traces.Count; i++)
-            {
-                interpolatedTraces.Add(new List<PointF>());
-                //List<PointF> temp = new List<PointF>();
-                decimal stepCount = 0;
-                //loop through points and get 2 points
-                for (int j = 1; j < traces[i].Count; j++)
-                {
-                    PointF fst = traces[i][j - 1];
-                    PointF snd = traces[i][j];
-                    //loop until stepcounter is bigger than the end point 
-                    while (stepCount < (decimal)snd.X && stepCount <= simTime)
-                    {
-                        interpolatedTraces[i].Add(vectorInterpolation(fst, snd, stepCount));
-                        stepCount += stepSize;
-                    }
-                }
-                
-            }
-        }
+        /// <summary>
+        /// Interpolate all simulations and stores them in "interpolatedTraces". Offset can be used to get clean values.
+        /// </summary>
+        /// <param name="stepSize">Size of each step in time (s).</param>
+        /// <param name="simTime">Total time of the simulation (s).</param>
+        /// <param name="offset">Recommended value is stepSize/2, set to 0 for no effect.</param>
         public void interpolateTraces(decimal stepSize, decimal simTime, decimal offset)
         {
             interpolatedTraces = new List<List<PointF>>();
-            //loop through "simulations"
+            // Loop through "simulations"
             for (int i = 0; i < traces.Count; i++)
             {
                 interpolatedTraces.Add(new List<PointF>());
-                //List<PointF> temp = new List<PointF>();
                 decimal stepCount = offset;
-                //loop through points and get 2 points
+                // Loop through points and get 2 points
                 for (int j = 1; j < traces[i].Count; j++)
                 {
                     PointF fst = traces[i][j - 1];
                     PointF snd = traces[i][j];
-                    //loop until stepcounter is bigger than the end point 
+                    // Loop until stepcounter is bigger than the end point 
                     while (stepCount < (decimal)snd.X && stepCount <= simTime)
                     {
                         interpolatedTraces[i].Add(vectorInterpolation(fst, snd, stepCount));
                         stepCount += stepSize;
                     }
                 }
-
             }
         }
-
+        /// <summary>
+        /// Linear interpolate the values between 2 points.
+        /// </summary>
+        /// <param name="startPoint"></param>
+        /// <param name="endPoint"></param>
+        /// <param name="pointSize">The interval between each point.</param>
+        /// <returns></returns>
         private PointF vectorInterpolation(PointF startPoint, PointF endPoint, decimal pointSize)
         {
-            //get the deltas of x and y
+            // Get the deltas of x and y
             decimal diff_X = (decimal)(endPoint.X - startPoint.X);
             decimal diff_Y = (decimal)(endPoint.Y - startPoint.Y);
-            //divide by zero check
+            // Divide by zero check
             if (diff_X == 0)
             {
-                MessageBox.Show("X: " + pointSize + " Y: " + endPoint.Y);
+                System.Console.WriteLine("X: " + pointSize + " Y: " + endPoint.Y);
                 return new PointF((float)pointSize, startPoint.Y);
             }
-            //calculate the gradient
+            // calculate the gradient
             decimal gradient = (diff_Y) / (diff_X);
-            //applies the interpolation
+            // Applies the interpolation
             decimal y = ((gradient * pointSize - gradient * (decimal)startPoint.X) + (decimal)startPoint.Y);
-           // MessageBox.Show("X: " + pointSize + " Y: " + y);
+
             return new PointF((float)pointSize, (float)y);
         }
-
     }
 }

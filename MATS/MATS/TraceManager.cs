@@ -7,11 +7,18 @@ namespace MATS
     {
         private List<SimulationTrace> Simulations;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public TraceManager()
         {
             Simulations = new List<SimulationTrace>();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="trace"></param>
+        /// <param name="name"></param>
         public TraceManager(string trace, string name)
         {
             /*
@@ -21,11 +28,18 @@ namespace MATS
             List<PointF> parsedTrace = new List<PointF>();
             Simulations.Add(new SimulationTrace(name, parsedTrace));
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="st"></param>
         public void AddSimulation(SimulationTrace st)
         {
             Simulations.Add(st);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string PrintSimulations()
         {
             string output = "";
@@ -35,6 +49,10 @@ namespace MATS
             }
             return output;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string PrintInterpolatedSimulations()
         {
             string output = "";
@@ -44,6 +62,10 @@ namespace MATS
             }
             return output;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string PrintInterpolatedSimulationsCSV()
         {
             string output = "";
@@ -53,13 +75,24 @@ namespace MATS
             }
             return output;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stepSize"></param>
+        /// <param name="simTime"></param>
         public void Interpolate(decimal stepSize, decimal simTime)
         {
             foreach (SimulationTrace item in Simulations)
             {
-                item.interpolateTraces(stepSize, simTime);
+                item.interpolateTraces(stepSize, simTime, 0);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stepSize"></param>
+        /// <param name="simTime"></param>
+        /// <param name="offset"></param>
         public void Interpolate(decimal stepSize, decimal simTime, decimal offset)
         {
             foreach (SimulationTrace item in Simulations)
@@ -67,6 +100,11 @@ namespace MATS
                 item.interpolateTraces(stepSize, simTime, offset);
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public SimulationTrace GetTrace(string name)
         {
             foreach (SimulationTrace item in Simulations)
@@ -79,10 +117,21 @@ namespace MATS
             return null;
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public SimulationTrace GetTrace(int index)
         {
             return Simulations[index];
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputName"></param>
+        /// <param name="simNR"></param>
+        /// <returns></returns>
         public decimal[] ExtractInputs(string inputName, int simNR)
         {
             List<PointF> simRun;
@@ -107,6 +156,12 @@ namespace MATS
             else
                 return null;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputName"></param>
+        /// <param name="simNR"></param>
+        /// <returns></returns>
         public List<int> ExtractIntInputs(string inputName, int simNR)
         {
             List<PointF> simRun;
