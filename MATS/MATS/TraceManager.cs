@@ -8,36 +8,33 @@ namespace MATS
         private List<SimulationTrace> Simulations;
 
         /// <summary>
-        /// 
+        /// Creates an empty TraceManager.
         /// </summary>
         public TraceManager()
         {
             Simulations = new List<SimulationTrace>();
         }
         /// <summary>
-        /// 
+        /// Creates a TraceManager with the given trace.
         /// </summary>
-        /// <param name="trace"></param>
-        /// <param name="name"></param>
+        /// <param name="trace">The Trace to add.</param>
+        /// <param name="name">Name of the parameter.</param>
         public TraceManager(string trace, string name)
         {
-            /*
-            parse trace
-            */
             Simulations = new List<SimulationTrace>();
             List<PointF> parsedTrace = new List<PointF>();
             Simulations.Add(new SimulationTrace(name, parsedTrace));
         }
         /// <summary>
-        /// 
+        /// Adds a simulation trace the the TraceManager.
         /// </summary>
-        /// <param name="st"></param>
+        /// <param name="st">The simulation trace to add.</param>
         public void AddSimulation(SimulationTrace st)
         {
             Simulations.Add(st);
         }
         /// <summary>
-        /// 
+        /// Prints all traces in the trace manager.
         /// </summary>
         /// <returns></returns>
         public string PrintSimulations()
@@ -50,7 +47,7 @@ namespace MATS
             return output;
         }
         /// <summary>
-        /// 
+        /// Prints all interpolated traces in the trace manager.
         /// </summary>
         /// <returns></returns>
         public string PrintInterpolatedSimulations()
@@ -63,20 +60,7 @@ namespace MATS
             return output;
         }
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string PrintInterpolatedSimulationsCSV()
-        {
-            string output = "";
-            foreach (SimulationTrace item in Simulations)
-            {
-                output += item.PrintInterpolatedSimulation() + "\r\n\r\n";
-            }
-            return output;
-        }
-        /// <summary>
-        /// 
+        /// Interpolates all traces in the tracemanager.
         /// </summary>
         /// <param name="stepSize"></param>
         /// <param name="simTime"></param>
@@ -88,11 +72,11 @@ namespace MATS
             }
         }
         /// <summary>
-        /// 
+        /// Interpolates all traces in the tracemanager. Also adds an offset to get cleaner outputs
         /// </summary>
         /// <param name="stepSize"></param>
         /// <param name="simTime"></param>
-        /// <param name="offset"></param>
+        /// <param name="offset">stepSize/2 is recommended.</param>
         public void Interpolate(decimal stepSize, decimal simTime, decimal offset)
         {
             foreach (SimulationTrace item in Simulations)
@@ -101,9 +85,9 @@ namespace MATS
             }
         }
         /// <summary>
-        /// 
+        /// Returns the trace by name.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">Name of the parameter to return.</param>
         /// <returns></returns>
         public SimulationTrace GetTrace(string name)
         {
@@ -118,19 +102,19 @@ namespace MATS
 
         }
         /// <summary>
-        /// 
+        /// Returns the trace by index.
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="index">Index of the trace to return</param>
         /// <returns></returns>
         public SimulationTrace GetTrace(int index)
         {
             return Simulations[index];
         }
         /// <summary>
-        /// 
+        /// Extracts the decimal input values from the trace.
         /// </summary>
-        /// <param name="inputName"></param>
-        /// <param name="simNR"></param>
+        /// <param name="inputName">Name of the input parameter.</param>
+        /// <param name="simNR">The simulation to retrive.</param>
         /// <returns></returns>
         public decimal[] ExtractInputs(string inputName, int simNR)
         {
@@ -157,10 +141,10 @@ namespace MATS
                 return null;
         }
         /// <summary>
-        /// 
+        /// Extracts the integer input values from the trace.
         /// </summary>
-        /// <param name="inputName"></param>
-        /// <param name="simNR"></param>
+        /// <param name="inputName">Name of the input parameter.</param>
+        /// <param name="simNR">The simulation to retrive.</param>
         /// <returns></returns>
         public List<int> ExtractIntInputs(string inputName, int simNR)
         {
