@@ -11,6 +11,9 @@ using System.Threading;
 
 namespace MATS
 {
+    /// <summary>
+    /// Represents the extracted inputs with name and values.
+    /// </summary>
     public struct ExtractedInputs
     {
         public string name;
@@ -51,11 +54,18 @@ namespace MATS
                 Environment.Exit(2);
             }
         }
-        // Event method to calculate the simulation time based on periodCount * periodLength + (periodLength - 1)
+        /// <summary>
+        /// Event method to calculate the simulation time based on periodCount * periodLength + (periodLength - 1).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Period_Changed(object sender, EventArgs e)
         {
             simTimeNumeric.Value = periodCountNumeric.Value * periodLengthNumeric.Value + (periodLengthNumeric.Value - 1);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private void setInternalVar()
         {
             //get number of simulations to run
@@ -97,10 +107,8 @@ namespace MATS
 
             // Runs verifitya on the Reference model
             tmOriginal = SimulateModel();
-
             //interpolate to get input values
             tmOriginal.Interpolate(tickSize, simTime, tickSize / 2);
-
             // Build the inputs based on the interpolated values
             mHandler.inputBuilder(inputs, tmOriginal, simruns);
 
@@ -138,25 +146,6 @@ namespace MATS
             verifyta_button.Text = tmpVerifytaName;
         }
 
-        public int CompareOutput(List<PointF> first, List<PointF> second, float delta)
-        {
-            if (first.Count != second.Count)
-            {
-                return -1;
-            }
-            int i = 0;
-            while (i < first.Count)
-            {
-                float calc = Math.Abs(first[i].Y - second[i].Y);
-                if (calc >= delta)
-                {
-                    return 1;
-                }
-                i++;
-            }
-            return 0;
-        }
-
         private void selectModelButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog selectModelDialog = new OpenFileDialog();
@@ -187,13 +176,17 @@ namespace MATS
                 labelSelectedMutants.Text = mutantsFilePath.Length + " Mutants Selected";
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private TraceManager SimulateModel()
         {
+            string query;
             TraceManager tmOriginal = new TraceManager();
             //builds query based on the inputs on the form
-            UPPAALSMCHandler.BuildQuery(simruns, simTime, inputs, outputQuery);
-
+            query = UPPAALSMCHandler.BuildQuery(simruns, simTime, inputs, outputQuery);
+            File.WriteAllText(@"./tempquery.q", query);
             try
             {
                 //Runs UPPAAL Program, needs to be extended with error handling
@@ -206,11 +199,17 @@ namespace MATS
             }
             return tmOriginal;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mutatedFiles"></param>
+        /// <returns></returns>
         private TraceManager[][] SimulateMutants(List<List<string>> mutatedFiles)
         {
+            string query;
             TraceManager[][] tmMutantArray = new TraceManager[mutatedFiles.Count][];
-            UPPAALSMCHandler.BuildQuery(1, simTime, null, outputQuery);
+            query = UPPAALSMCHandler.BuildQuery(1, simTime, null, outputQuery);
+            File.WriteAllText(@"./tempquery.q", query);
             try
             {
                 Parallel.For(0, mutatedFiles.Count, i =>

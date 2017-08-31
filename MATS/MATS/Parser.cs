@@ -16,7 +16,7 @@ namespace MATS
         /// <param name="stream">Input stream to convert.</param>
         /// <param name="runs">How many simulations the stream contains.</param>
         /// <returns></returns>
-        public static TraceManager Parse(Stream stream, int runs)
+        public static TraceManager Parse(Stream stream, int runs) // Would be good to remove runs from the input
         {
             TraceManager tm = new TraceManager();
             using (StreamReader reader = new StreamReader(stream))
