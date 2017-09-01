@@ -6,28 +6,36 @@ using System.Text;
 
 namespace MATS
 {
-    //
+    /// <summary>
+    /// Handles everything required for the mutants.
+    /// </summary>
     class MutantHandler
     {
-       /* private class Mutants
-        {
-            public int model;
-            public int simulation;
-            private SimulationTrace mutant;
-            public Mutants(int model, int simulation, SimulationTrace mutant)
-            {
-                this.model = model;
-                this.simulation = simulation;
-                this.mutant = mutant;
-            }
-        }*/
+        /* private class Mutants
+         {
+             public int model;
+             public int simulation;
+             private SimulationTrace mutant;
+             public Mutants(int model, int simulation, SimulationTrace mutant)
+             {
+                 this.model = model;
+                 this.simulation = simulation;
+                 this.mutant = mutant;
+             }
+         }*/
 
-        //first list is for simulations second is for parameters
+        /// <summary>
+        /// First list is for simulations second is for parameters.
+        /// </summary>
         private List<List<ExtractedInputs>> extractedInputs;
 
         public MutantHandler()
         {
         }
+        /// <summary>
+        /// Returns the extracted inputs.
+        /// </summary>
+        /// <returns></returns>
         public List<List<ExtractedInputs>> GetExtractedInputs()
         {
             return extractedInputs;
@@ -86,7 +94,11 @@ namespace MATS
                 }
             }
         }
-
+        /// <summary>
+        /// Constructs a string containing all the extracted inputs.
+        /// </summary>
+        /// <param name="simulations">How many simulations to print.</param>
+        /// <returns></returns>
         public string printInputs(int simulations)
         {
             string exInputs = "";
@@ -106,6 +118,11 @@ namespace MATS
             }
             return exInputs;
         }
+        /// <summary>
+        /// Builds the required string for insertion of the inputs into the mutants.
+        /// </summary>
+        /// <param name="sim">0-indexed.</param>
+        /// <returns></returns>
         private string createInputs(int sim)
         {
             string exInputs = "";

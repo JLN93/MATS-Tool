@@ -64,7 +64,7 @@ namespace MATS
             simTimeNumeric.Value = periodCountNumeric.Value * periodLengthNumeric.Value + (periodLengthNumeric.Value - 1);
         }
         /// <summary>
-        /// 
+        /// Retrives the inputs from the GUI.
         /// </summary>
         private void setInternalVar()
         {
@@ -177,7 +177,7 @@ namespace MATS
             }
         }
         /// <summary>
-        /// 
+        /// Simulates the reference model.
         /// </summary>
         /// <returns></returns>
         private TraceManager SimulateModel()
@@ -200,9 +200,9 @@ namespace MATS
             return tmOriginal;
         }
         /// <summary>
-        /// 
+        /// Simulates the mutants.
         /// </summary>
-        /// <param name="mutatedFiles"></param>
+        /// <param name="mutatedFiles">Filepaths to the mutants.</param>
         /// <returns></returns>
         private TraceManager[][] SimulateMutants(List<List<string>> mutatedFiles)
         {

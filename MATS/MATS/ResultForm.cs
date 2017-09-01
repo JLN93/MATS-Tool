@@ -25,7 +25,6 @@ namespace MATS
         public ResultForm(ResultHandler rH, String parameters, List<List<ExtractedInputs>> extractedInputs)
         {
             InitializeComponent();
-            List<List<int>> resultTable;
             this.parameters = parameters;
             this.rH = rH;
             parentForm = (Form1)Application.OpenForms[0];
@@ -37,7 +36,7 @@ namespace MATS
             ColorBestTestCases();
         }
         /// <summary>
-        /// 
+        /// Old constructor.
         /// </summary>
         /// <param name="resultTable"></param>
         /// <param name="extractedInputs"></param>
@@ -53,11 +52,11 @@ namespace MATS
             ColorBestTestCases();
         }
         /// <summary>
-        /// 
+        /// Colors the best test cases for full coverage.
         /// </summary>
         private void ColorBestTestCases()
         {
-            List<int> bestTest = ResultHandler.SelectBestTestCase(resultTable, resultTable[0].Count);
+            List<int> bestTest = ResultHandler.SelectBestTestCase(resultTable);
             Console.WriteLine("Choosen test cases: ");
             foreach (int item in bestTest)
             {
@@ -65,11 +64,7 @@ namespace MATS
                 CheckBoxes[item].BackColor = Color.LightGreen;
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void Form_Resize(object sender, EventArgs e)
         {
             panel1.Size = new System.Drawing.Size(this.ClientSize.Width, this.ClientSize.Height - 41);
@@ -77,7 +72,7 @@ namespace MATS
             buttonExport.Location = new System.Drawing.Point(12, this.ClientSize.Height - 35);
         }
         /// <summary>
-        /// 
+        /// Fills the GUI with the result table.
         /// </summary>
         private void PopulateForm()
         {
@@ -129,9 +124,9 @@ namespace MATS
             MessageBox.Show(PrintInputs(index));
         }
         /// <summary>
-        /// 
+        /// Returs a string containing the input values from selected testcase.
         /// </summary>
-        /// <param name="simulation"></param>
+        /// <param name="simulation">Test case to show.</param>
         /// <returns></returns>
         private string PrintInputs(int simulation)
         {
