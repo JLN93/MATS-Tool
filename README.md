@@ -1,8 +1,8 @@
--# MATS-Tool - 
-Automatic Test Generation and Mutation Analysis using UPPAAL SMC - Thesis work for the degree of Bachelor in Computer Science at Mälardalens Högskola.
-Student - Jonatan Larsson - JLN13010@student.mdh.se
-Supervisors - Dr. Raluca Marinescu and Dr. Eduard Enoiu
-Examinar - Associate Professor Cristina Seceleanu
+-# MATS-Tool - </br>
+Automatic Test Generation and Mutation Analysis using UPPAAL SMC - Thesis work for the degree of Bachelor in Computer Science at Mälardalens Högskola. </br></br>
+Student - Jonatan Larsson - JLN13010@student.mdh.se</br>
+Supervisors - Dr. Raluca Marinescu and Dr. Eduard Enoiu</br>
+Examinar - Associate Professor Cristina Seceleanu</br>
 
 MATS is a tool for Automating test generation and test selection for UPPAAL SMC.
 
