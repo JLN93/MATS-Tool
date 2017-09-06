@@ -5,20 +5,26 @@ using System.IO;
 
 namespace MATS
 {
+    /// <summary>
+    /// Used to convert verifyta output into usable data.
+    /// </summary>
     public static class Parser
     {
-
-        //can add multithread
-        public static TraceManager Parse(Stream stream, int runs)
+        /// <summary>
+        /// Takes an input stream from verifyta and converts it naively into a TraceManager.
+        /// </summary>
+        /// <param name="stream">Input stream to convert.</param>
+        /// <param name="runs">How many simulations the stream contains.</param>
+        /// <returns></returns>
+        public static TraceManager Parse(Stream stream, int runs) // Would be good to remove runs from the input
         {
             TraceManager tm = new TraceManager();
             using (StreamReader reader = new StreamReader(stream))
             {
                 //remove the first 3 lines from UPPAAL output
-                string clense; //redundant
                 for (int i = 0; i < 3; i++)
                 {
-                    clense = reader.ReadLine();
+                    reader.ReadLine();
                 }
                 while (reader.EndOfStream != true)
                 {
@@ -48,9 +54,13 @@ namespace MATS
                     tm.AddSimulation(st);
                 }
             }
-                return tm;
-            }
-
+            return tm;
+        }
+        /// <summary>
+        /// Converts a string into a list of points.
+        /// </summary>
+        /// <param name="s">String to convert.</param>
+        /// <returns></returns>
         private static List<PointF> String2PointF(string s)
         {
             List<PointF> pF = new List<PointF>();
@@ -64,9 +74,13 @@ namespace MATS
             }
             return pF;
         }
+        /// <summary>
+        /// Removes newlines and parentheses from the string.
+        /// </summary>
+        /// <param name="inputToClean">String to clean.</param>
+        /// <returns></returns>
         private static string TraceCleaner(string inputToClean)
         {
-
             inputToClean = inputToClean.Replace("\r\n", " ");
             inputToClean = inputToClean.Replace("(", string.Empty);
             inputToClean = inputToClean.Replace(")", string.Empty);

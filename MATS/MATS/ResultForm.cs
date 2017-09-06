@@ -14,7 +14,32 @@ namespace MATS
         List<Label> Result;
         List<CheckBox> CheckBoxes;
         Form1 parentForm;
-
+        String parameters;
+        ResultHandler rH;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rH"></param>
+        /// <param name="parameters"></param>
+        /// <param name="extractedInputs"></param>
+        public ResultForm(ResultHandler rH, String parameters, List<List<ExtractedInputs>> extractedInputs)
+        {
+            InitializeComponent();
+            this.parameters = parameters;
+            this.rH = rH;
+            parentForm = (Form1)Application.OpenForms[0];
+            this.resultTable = rH.compareMutants(parameters);
+            this.extractedInputs = extractedInputs;
+            CheckBoxes = new List<CheckBox>();
+            Result = new List<Label>();
+            PopulateForm();
+            ColorBestTestCases();
+        }
+        /// <summary>
+        /// Old constructor.
+        /// </summary>
+        /// <param name="resultTable"></param>
+        /// <param name="extractedInputs"></param>
         public ResultForm(List<List<int>> resultTable, List<List<ExtractedInputs>> extractedInputs)
         {
             InitializeComponent();
@@ -26,9 +51,12 @@ namespace MATS
             PopulateForm();
             ColorBestTestCases();
         }
+        /// <summary>
+        /// Colors the best test cases for full coverage.
+        /// </summary>
         private void ColorBestTestCases()
         {
-            List<int> bestTest = TestSelector.SelectBestTestCase(resultTable, resultTable[0].Count);
+            List<int> bestTest = ResultHandler.SelectBestTestCase(resultTable);
             Console.WriteLine("Choosen test cases: ");
             foreach (int item in bestTest)
             {
@@ -36,15 +64,19 @@ namespace MATS
                 CheckBoxes[item].BackColor = Color.LightGreen;
             }
         }
+
         private void Form_Resize(object sender, EventArgs e)
         {
             panel1.Size = new System.Drawing.Size(this.ClientSize.Width, this.ClientSize.Height - 41);
             button1.Location = new System.Drawing.Point(this.ClientSize.Width - 87, this.ClientSize.Height - 35);
             buttonExport.Location = new System.Drawing.Point(12, this.ClientSize.Height - 35);
         }
+        /// <summary>
+        /// Fills the GUI with the result table.
+        /// </summary>
         private void PopulateForm()
         {
-            //Build table
+            //Build table, Mutants as colums and testcases as rows
             StringBuilder table = new StringBuilder("".PadLeft(10));
             for (int i = 0; i < resultTable[0].Count; i++)
             {
@@ -91,6 +123,11 @@ namespace MATS
             int index = int.Parse(label1.Name);
             MessageBox.Show(PrintInputs(index));
         }
+        /// <summary>
+        /// Returs a string containing the input values from selected testcase.
+        /// </summary>
+        /// <param name="simulation">Test case to show.</param>
+        /// <returns></returns>
         private string PrintInputs(int simulation)
         {
             List<ExtractedInputs> ei = extractedInputs[simulation];

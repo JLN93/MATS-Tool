@@ -6,36 +6,52 @@ using System.Text;
 
 namespace MATS
 {
-    //
-    class Mutator
+    /// <summary>
+    /// Handles everything required for the mutants.
+    /// </summary>
+    class MutantHandler
     {
-        private class Mutants
-        {
-            public int model;
-            public int simulation;
-            private SimulationTrace mutant;
-            public Mutants(int model, int simulation, SimulationTrace mutant)
-            {
-                this.model = model;
-                this.simulation = simulation;
-                this.mutant = mutant;
-            }
-        }
+        /* private class Mutants
+         {
+             public int model;
+             public int simulation;
+             private SimulationTrace mutant;
+             public Mutants(int model, int simulation, SimulationTrace mutant)
+             {
+                 this.model = model;
+                 this.simulation = simulation;
+                 this.mutant = mutant;
+             }
+         }*/
 
-        //first list is for simulations second is for parameters
+        /// <summary>
+        /// First list is for simulations second is for parameters.
+        /// </summary>
         private List<List<ExtractedInputs>> extractedInputs;
 
-        public Mutator()
+        public MutantHandler()
         {
         }
+        /// <summary>
+        /// Returns the extracted inputs.
+        /// </summary>
+        /// <returns></returns>
         public List<List<ExtractedInputs>> GetExtractedInputs()
         {
             return extractedInputs;
         }
+
+        /// <summary>
+        /// Multiplies and modifies the mutants to contain the appropiate inputs and returns the organized filelist
+        /// </summary>
         public List<List<string>> MutateFiles(string[] mutationModels, int simulations)
         {
             List<List<string>> fileList = new List<List<string>>();
             StringBuilder sB;
+            if (extractedInputs == null)
+            {
+                throw new NullReferenceException("ExtractedInputs");
+            }
             for (int i = 0; i < simulations; i++)
             {
                 fileList.Add(new List<string>());
@@ -59,6 +75,12 @@ namespace MATS
             }
             return fileList;
         }
+        /// <summary>
+        /// Method to extract required inputs from a TraceManager to later be put in the mutated models
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="tm"></param>
+        /// <param name="simulations">Total number of simulations to build for</param>
         public void inputBuilder(string[] inputs, TraceManager tm, int simulations)
         {
             extractedInputs = new List<List<ExtractedInputs>>();
@@ -72,6 +94,11 @@ namespace MATS
                 }
             }
         }
+        /// <summary>
+        /// Constructs a string containing all the extracted inputs.
+        /// </summary>
+        /// <param name="simulations">How many simulations to print.</param>
+        /// <returns></returns>
         public string printInputs(int simulations)
         {
             string exInputs = "";
@@ -91,6 +118,11 @@ namespace MATS
             }
             return exInputs;
         }
+        /// <summary>
+        /// Builds the required string for insertion of the inputs into the mutants.
+        /// </summary>
+        /// <param name="sim">0-indexed.</param>
+        /// <returns></returns>
         private string createInputs(int sim)
         {
             string exInputs = "";

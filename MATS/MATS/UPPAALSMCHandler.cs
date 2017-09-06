@@ -5,8 +5,19 @@ using System.Text;
 
 namespace MATS
 {
+    /// <summary>
+    /// Handles the connection to UPPAALS verifyta.
+    /// </summary>
     public static class UPPAALSMCHandler
     {
+        /// <summary>
+        /// Builds a Verifyta query with the provided details.
+        /// </summary>
+        /// <param name="simRuns"></param>
+        /// <param name="simTime"></param>
+        /// <param name="inputs"></param>
+        /// <param name="output"></param>
+        /// <returns>The query string.</returns>
         public static string BuildQuery(int simRuns, decimal simTime, string[] inputs, string output)
         {
             string query;
@@ -25,11 +36,17 @@ namespace MATS
                 query = "simulate " + simRuns + " [<=" + simTime + "] {" + processedInput + output + "}";
             else
                 query = "simulate " + simRuns + " [<=" + simTime + "] {" + processedInput + ", " + output + "}";
-            Console.WriteLine(query);
-            File.WriteAllText(@"./tempquery.q", query);
-            return null;
+            //Console.WriteLine(query);
+            //File.WriteAllText(@"./tempquery.q", query);
+            return query;
         }
-        public static TraceManager RunUPPAAL(string filePath, int simruns)
+        /// <summary>
+        /// Simulates the provided model in UPPAAL and returns the result.
+        /// </summary>
+        /// <param name="filePath">Filepath to the model.</param>
+        /// <param name="simruns">How many simulationruns to be parsed</param>
+        /// <returns>A TraceManager containing the result from the simulations</returns>
+        public static TraceManager RunUPPAAL(string filePath, int simruns) // Would be good to remove simruns.
         {
             TraceManager tm;
             string outputS;
