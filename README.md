@@ -1,5 +1,6 @@
 -# MATS-Tool - </br>
-Automatic Test Generation and Mutation Analysis using UPPAAL SMC - Thesis work for the degree of Bachelor in Computer Science at Mälardalens Högskola. </br></br>
+Automatic Test Generation and Mutation Analysis using UPPAAL SMC - Thesis work for the degree of Bachelor in Computer Science at Mälardalens Högskola. http://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1140244</br>
+</br>
 Student - Jonatan Larsson - JLN13010@student.mdh.se</br>
 Supervisors - Dr. Raluca Marinescu and Dr. Eduard Enoiu</br>
 Examinar - Associate Professor Cristina Seceleanu</br>
