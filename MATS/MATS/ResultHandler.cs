@@ -13,7 +13,7 @@ namespace MATS
         TraceManager[][] tmMutantArray;
         decimal stepSize;
         decimal simTime;
-        decimal deltaValue;
+        //decimal deltaValue;
         int testCaseCount;
         /// <summary>
         /// Creates a result handler.
@@ -24,15 +24,16 @@ namespace MATS
         /// <param name="stepSize"></param>
         /// <param name="simTime"></param>
         /// <param name="deltaValue"></param>
-        public ResultHandler(TraceManager tmOriginal, TraceManager[][] tmMutantArray, int testCaseCount, decimal stepSize, decimal simTime, decimal deltaValue)
+        public ResultHandler(TraceManager tmOriginal, TraceManager[][] tmMutantArray, int testCaseCount, decimal stepSize, decimal simTime/*, decimal deltaValue*/)
         {
             this.testCaseCount = testCaseCount;
             this.tmOriginal = tmOriginal;
             this.tmMutantArray = tmMutantArray;
             this.stepSize = stepSize;
             this.simTime = simTime;
-            this.deltaValue = deltaValue;
+            //this.deltaValue = deltaValue;
         }
+
         /// <summary>
         /// Selects the test cases which yield closest to full coverage.
         /// </summary>
@@ -40,19 +41,29 @@ namespace MATS
         /// <returns></returns>
         public static List<int> SelectBestTestCase(List<List<int>> resultTable)
         {
+            // Create list to store choosen test casses
             List<int> testCases = new List<int>();
+            // Add testcase 0 as default
             testCases.Add(0);
+            // loop through all test cases
             for (int i = 1; i < resultTable.Count; i++)
             {
+                // Sets default value to add
                 bool add = true;
+                // loop through test cases stored in 'List<int> testCases'
                 for (int j = 0; j < testCases.Count; j++)
                 {
-                    int result = CompareTestArray(resultTable[testCases[j]].ToArray(), resultTable[i].ToArray());
+                    // Takes test case from number stored in testcase[j]
+                    int[] TestCaseFromRT = resultTable[testCases[j]].ToArray();
+                    // Compares test cases
+                    int result = CompareTestArray(TestCaseFromRT, resultTable[i].ToArray());
+                    // if 2, replace testcase
                     if (result == 2)
                     {
                         testCases[j] = i;
                         add = false;
                     }
+                    // if 0, don't add because same
                     else if (result == 0)
                     {
                         add = false;
@@ -62,11 +73,12 @@ namespace MATS
                     testCases.Add(i);
             }
             // Debugging
+            /*
             foreach (int item in testCases)
             {
                 Console.WriteLine(item);
             }
-
+            */
             for (int j = 0; j < testCases.Count; j++)
             {
                 bool same = false;
@@ -119,8 +131,9 @@ namespace MATS
         /// Builds a result table where 1 represents detected mutant and 0 undetected
         /// </summary>
         /// <param name="parameter">The parameter to compare.</param>
+        /// <param name="deltaValue">The max allowed delta.</param>
         /// <returns></returns>
-        public List<List<int>> compareMutants(string parameter)
+        public List<List<int>> compareMutants(string parameter, decimal deltaValue)
         {
             List<List<int>> resultTable = new List<List<int>>();
             // Sets the trace to even steps with the mutants.

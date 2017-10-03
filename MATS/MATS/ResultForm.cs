@@ -22,18 +22,21 @@ namespace MATS
         /// <param name="rH"></param>
         /// <param name="parameters"></param>
         /// <param name="extractedInputs"></param>
-        public ResultForm(ResultHandler rH, String parameters, List<List<ExtractedInputs>> extractedInputs)
+        /// <param name="delta"></param>
+        public ResultForm(ResultHandler rH, String parameters, decimal delta, List<List<ExtractedInputs>> extractedInputs)
         {
             InitializeComponent();
             this.parameters = parameters;
             this.rH = rH;
             parentForm = (Form1)Application.OpenForms[0];
-            this.resultTable = rH.compareMutants(parameters);
             this.extractedInputs = extractedInputs;
             CheckBoxes = new List<CheckBox>();
             Result = new List<Label>();
-            PopulateForm();
-            ColorBestTestCases();
+            PopulateForm(extractedInputs.Count);
+            deltaNumUpDown.Value = delta;
+            // Initial comparison
+            //this.resultTable = rH.compareMutants(parameters, deltaNumUpDown.Value);
+            //ColorBestTestCases();
         }
         /// <summary>
         /// Old constructor.
@@ -48,7 +51,7 @@ namespace MATS
             this.extractedInputs = extractedInputs;
             CheckBoxes = new List<CheckBox>();
             Result = new List<Label>();
-            PopulateForm();
+            PopulateForm(extractedInputs.Count);
             ColorBestTestCases();
         }
         /// <summary>
@@ -56,6 +59,10 @@ namespace MATS
         /// </summary>
         private void ColorBestTestCases()
         {
+            foreach (CheckBox item in CheckBoxes)
+            {
+                item.BackColor = SystemColors.Control;
+            }
             List<int> bestTest = ResultHandler.SelectBestTestCase(resultTable);
             Console.WriteLine("Choosen test cases: ");
             foreach (int item in bestTest)
@@ -74,25 +81,25 @@ namespace MATS
         /// <summary>
         /// Fills the GUI with the result table.
         /// </summary>
-        private void PopulateForm()
+        private void PopulateForm(int mutants)
         {
             //Build table, Mutants as colums and testcases as rows
             StringBuilder table = new StringBuilder("".PadLeft(10));
-            for (int i = 0; i < resultTable[0].Count; i++)
+            for (int i = 0; i < mutants; i++)
             {
                 table.Append("M" + (i + 1) + "".PadLeft(3));
             }
             HeadLabel.Text = table.ToString();
             table.Clear();
-            for (int i = 0; i < resultTable.Count; i++)
+            for (int i = 0; i < mutants; i++)
             {
-                int padding = 9 - (((i + 1).ToString().Length) * 2);
+                /*int padding = 9 - (((i + 1).ToString().Length) * 2);
                 table.Append("T" + (i + 1) + "".PadRight(padding));
                 for (int j = 0; j < resultTable[i].Count; j++)
                 {
                     table.Append(resultTable[i][j].ToString() + "".PadLeft(6));
-                }
-                Label label1 = new Label();
+                }*/
+                //Label label1 = new Label();
                 ToolTip toolTip = new ToolTip();
                 CheckBox checkBox = new CheckBox();
                 toolTip.AutoPopDelay = 5000;
@@ -101,16 +108,37 @@ namespace MATS
                 toolTip.ToolTipTitle = "T" + (i + 1);
                 // Force the ToolTip text to be displayed whether or not the form is active.
                 toolTip.ShowAlways = true;
+                //checkBox.Name = "checkBoxTC" + i;
                 checkBox.AutoSize = true;
                 checkBox.Location = new System.Drawing.Point(11, HeadLabel.Location.Y + (17 * (i + 1) + 4));
-                checkBox.Name = i.ToString();
+                checkBox.Name = "checkBoxTC" + i.ToString();
                 checkBox.TabIndex = 3;
-                checkBox.Text = table.ToString();
+                //checkBox.Text = table.ToString();
                 checkBox.UseVisualStyleBackColor = true;
                 CheckBoxes.Add(checkBox);
                 panel1.Controls.Add(checkBox);
                 toolTip.SetToolTip(checkBox, PrintInputs(i));
                 table.Clear();
+            }
+        }
+        /// <summary>
+        /// Updates the GUI with the mutation result
+        /// </summary>
+        private void UpdateForm()
+        {
+            StringBuilder row = new StringBuilder();
+            for (int i = 0; i < resultTable.Count; i++)
+            {
+                row.Clear();
+                int padding = 9 - (((i + 1).ToString().Length) * 2);
+                row.Append("T" + (i + 1) + "".PadRight(padding));
+                for (int j = 0; j < resultTable[i].Count; j++)
+                {
+                    row.Append(resultTable[i][j].ToString() + "".PadLeft(6));
+                }
+                string foo = "checkBoxTC" + i.ToString();
+                Control test = this.Controls.Find(foo, true)[0];
+                test.Text = row.ToString();
             }
         }
         private void button1_Click(object sender, EventArgs e)
@@ -163,7 +191,13 @@ namespace MATS
             {
                 File.WriteAllText(SFD.FileName, sb.ToString());
             }
+        }
 
+        private void DeltaChange(object sender, EventArgs e)
+        {
+            this.resultTable = rH.compareMutants(parameters, deltaNumUpDown.Value);
+            UpdateForm();
+            ColorBestTestCases();
         }
     }
 }

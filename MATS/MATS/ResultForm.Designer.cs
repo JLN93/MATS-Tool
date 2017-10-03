@@ -32,7 +32,10 @@
             this.buttonExport = new System.Windows.Forms.Button();
             this.HeadLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.deltaNumUpDown = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.deltaNumUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -75,11 +78,36 @@
             this.panel1.Size = new System.Drawing.Size(364, 260);
             this.panel1.TabIndex = 3;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(123, 271);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Delta:";
+            // 
+            // deltaNumUpDown
+            // 
+            this.deltaNumUpDown.DecimalPlaces = 2;
+            this.deltaNumUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.deltaNumUpDown.Location = new System.Drawing.Point(164, 267);
+            this.deltaNumUpDown.Name = "deltaNumUpDown";
+            this.deltaNumUpDown.Size = new System.Drawing.Size(45, 20);
+            this.deltaNumUpDown.TabIndex = 5;
+            this.deltaNumUpDown.ValueChanged += new System.EventHandler(this.DeltaChange);
+            // 
             // ResultForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(364, 301);
+            this.Controls.Add(this.deltaNumUpDown);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonExport);
             this.Controls.Add(this.button1);
@@ -90,7 +118,9 @@
             this.Resize += new System.EventHandler(this.Form_Resize);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.deltaNumUpDown)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -100,5 +130,7 @@
         private System.Windows.Forms.Button buttonExport;
         private System.Windows.Forms.Label HeadLabel;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown deltaNumUpDown;
     }
 }

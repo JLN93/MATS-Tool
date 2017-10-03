@@ -139,8 +139,8 @@ namespace MATS
             totalWatch.Stop();
             var TotalelapsedS = totalWatch.ElapsedMilliseconds / 1000;
             MessageBox.Show("Total Execution Time: " + TotalelapsedS.ToString() + "s");
-            ResultHandler testSelector = new ResultHandler(tmOriginal, tmMutantArray, mutatedFiles.Count, stepSize, simTime, deltaValue);
-            ResultForm RF = new ResultForm(testSelector, outputQuery, mHandler.GetExtractedInputs());
+            ResultHandler testSelector = new ResultHandler(tmOriginal, tmMutantArray, mutatedFiles.Count, stepSize, simTime);
+            ResultForm RF = new ResultForm(testSelector, outputQuery, deltaValue, mHandler.GetExtractedInputs());
             //ResultForm RF = new ResultForm(resultTable, mHandler.GetExtractedInputs());
             RF.ShowDialog();
             verifyta_button.Text = tmpVerifytaName;
