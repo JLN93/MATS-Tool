@@ -2,7 +2,8 @@
 
 MATS is a tool for Automating test generation and test selection for UPPAAL SMC.
 
-![battery-6395072_1920](https://user-images.githubusercontent.com/7644735/216753158-439ecda8-a03a-406b-9363-06d9cb07e71e.jpg)
+![tablet-6092248_1280](https://user-images.githubusercontent.com/7644735/216753181-7c004949-8448-4f40-8278-81125c71007b.jpg)
+
 
 This tool is currently tailored to work on the provided Brake by wire model and its manually mutated mutants. However MATS can be modified to support other models. The included models are provided.
 
